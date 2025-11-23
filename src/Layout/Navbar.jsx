@@ -4,9 +4,9 @@ import { Link, NavLink } from "react-router";
 const Navbar = () => {
   return (
     <>
-      <nav>
-        <div className="max-w-7xl mx-auto">
-          <div className="navbar bg-base-100 py-1.5">
+      <nav className="shadow-lg sticky top-0 z-50">
+        <div>
+          <div className="navbar bg-base-100 py-2 ">
             <div className="navbar-start">
               <div className="dropdown">
                 <div
