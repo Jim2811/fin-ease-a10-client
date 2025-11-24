@@ -1,13 +1,21 @@
-import React from 'react';
-import google from '../assets/Google.svg'
-import { Link } from 'react-router';
+import React from "react";
+import google from "../assets/Google.svg";
+import { Link } from "react-router";
+import useAuth from "../Hooks/useAuth";
 const Login = () => {
-    const handleLogin = (e) =>{
-        console.log('clicked');
-    }
-    return (
-        <>
-            <title>Login - FinEase</title>
+  const {signInUser} = useAuth()
+  const handleLogin = (e) => {
+    e.preventDefault();
+     const form = e.target;
+    const mail = form.email.value;
+    const pass = form.password.value;
+    signInUser(mail, pass)
+    .then(r => console.log(r))
+    .then(err => console.log(err))
+  };
+  return (
+    <>
+      <title>Login - FinEase</title>
       <div className="h-full w-11/12 mx-auto flex justify-center py-20 items-center flex-col">
         <form onSubmit={handleLogin}>
           <fieldset className="fieldset bg-base-100 border-base-300 rounded-box w-xs border p-4">
@@ -19,7 +27,7 @@ const Login = () => {
               className="input"
               placeholder="Email"
               name="email"
-            //   onChange={(e) => setEmail(e.target.value)}
+              //   onChange={(e) => setEmail(e.target.value)}
               required
             />
 
@@ -31,7 +39,10 @@ const Login = () => {
               name="password"
               required
             />
-            <Link to={"/reset-password"} className="text-primary font-bold py-1">
+            <Link
+              to={"/reset-password"}
+              className="text-primary font-bold py-1"
+            >
               Forgot Password
             </Link>
             <button className="btn btn-accent mt-4" type="submit">
@@ -61,8 +72,8 @@ const Login = () => {
           Login with Google
         </button>
       </div>
-        </>
-    );
+    </>
+  );
 };
 
 export default Login;

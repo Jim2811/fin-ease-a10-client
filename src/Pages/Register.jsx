@@ -1,9 +1,10 @@
-import React, { use } from "react";
+import React from "react";
 import { Link } from "react-router";
 import AuthContext from "../Context/AuthContext";
+import useAuth from "../Hooks/useAuth";
 
 const Register = () => {
-  const {createUser} = use(AuthContext)
+  const {createUser} = useAuth()
   const handleSubmit = (e) =>{
     e.preventDefault();
     const form = e.target;
