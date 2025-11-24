@@ -3,13 +3,23 @@ import { Link } from "react-router";
 import AuthContext from "../Context/AuthContext";
 
 const Register = () => {
-  const {user} = use(AuthContext)
-  console.log(user);
+  const {createUser} = use(AuthContext)
+  const handleSubmit = (e) =>{
+    e.preventDefault();
+    const form = e.target;
+    const name = form.name.value;
+    const mail = form.email.value;
+    const photo = form.photoURL.value;
+    const pass = form.pass.value;
+    createUser(mail, pass)
+    .then(r => console.log(r))
+    .then(err => console.log(err))
+  }
   return (
     <>
       <title>Register - FinEase</title>
       <div className="h-full w-11/12 mx-auto flex justify-center py-20 flex-col items-center">
-        <form>
+        <form onSubmit={handleSubmit}>
           <fieldset className="fieldset bg-base-100 border-base-300 rounded-box w-xs border p-4">
             <legend className="fieldset-legend">Register</legend>
 
@@ -35,7 +45,6 @@ const Register = () => {
               className="input"
               placeholder="Photo URL"
               name="photoURL"
-              required
             />
 
             <label className="label">Password</label>
