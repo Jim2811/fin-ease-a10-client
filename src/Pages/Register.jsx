@@ -1,7 +1,10 @@
-import React from "react";
+import React, { use } from "react";
 import { Link } from "react-router";
+import AuthContext from "../Context/AuthContext";
 
 const Register = () => {
+  const {user} = use(AuthContext)
+  console.log(user);
   return (
     <>
       <title>Register - FinEase</title>
