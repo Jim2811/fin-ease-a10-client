@@ -2,6 +2,7 @@ import React from "react";
 import Logo from "../assets/Logo.png";
 import { Link, NavLink } from "react-router";
 import useAuth from "../Hooks/useAuth";
+import LogoutAndProfile from "../Components/LogoutandProfile";
 const Navbar = () => {
   const {user} = useAuth()
   return (
@@ -16,6 +17,7 @@ const Navbar = () => {
                   role="button"
                   className="btn btn-ghost lg:hidden"
                 >
+
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     className="h-5 w-5"
@@ -72,9 +74,9 @@ const Navbar = () => {
             </div>
             <div className="navbar-end">
               {
-                !user ? <Link className="btn btn-primary bg-red-600">Logout</Link> :
-
-              <Link to={'/login'} className="btn btn-primary text-white font-bold">Login/Register</Link>
+                !user ? 
+                <LogoutAndProfile/> :
+                <Link to={'/login'} className="btn btn-primary text-white font-bold">Login/Register</Link>
               }
             </div>
           </div>

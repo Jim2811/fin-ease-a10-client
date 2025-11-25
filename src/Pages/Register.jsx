@@ -1,10 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router";
-import AuthContext from "../Context/AuthContext";
 import useAuth from "../Hooks/useAuth";
-
+import { updateProfile } from "firebase/auth";
 const Register = () => {
   const {createUser} = useAuth()
+  const [success, setSuccess] = useState(null)
+  const [error, setError] = useState(null)
   const handleSubmit = (e) =>{
     e.preventDefault();
     const form = e.target;
@@ -13,8 +14,19 @@ const Register = () => {
     const photo = form.photoURL.value;
     const pass = form.pass.value;
     createUser(mail, pass)
-    .then(r => console.log(r))
-    .then(err => console.log(err))
+    .then(r => {
+      return updateProfile(r.user, {
+        displayName: name,
+        photoURL: photo
+      }).then(()=> {
+        setSuccess("Registration successful! Welcome to FinEase.");
+        form.reset();
+        return r.user
+      })
+    })
+    .catch((err) => {
+      setError(err.message)
+    })
   }
   return (
     <>
