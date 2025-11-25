@@ -12,17 +12,17 @@ const LogoutAndProfile = () => {
   }
   return (
     <>
-      <div className="flex items-center gap-1">
+      <div className="flex items-center gap-2">
         <div className="dropdown">
           <div tabIndex={0} role="button">
             <img
               src={user?.photoURL || ProfilePic}
-              className="w-8 cursor-pointer rounded-full"
+              className="w-9 cursor-pointer rounded-full border-2 border-[#ff6f00]"
             />
           </div>
           <ul
                   tabIndex="-1"
-                  className="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-56 p-2 shadow right-1"
+                  className="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-56 p-2 shadow -left-24"
                 >
                   <li>
                     <NavLink to={"/"}>Home</NavLink>
