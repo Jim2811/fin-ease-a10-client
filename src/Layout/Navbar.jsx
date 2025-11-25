@@ -1,7 +1,9 @@
 import React from "react";
 import Logo from "../assets/Logo.png";
 import { Link, NavLink } from "react-router";
+import useAuth from "../Hooks/useAuth";
 const Navbar = () => {
+  const {user} = useAuth()
   return (
     <>
       <nav className="shadow-lg sticky top-0 z-50">
@@ -69,7 +71,11 @@ const Navbar = () => {
               </ul>
             </div>
             <div className="navbar-end">
-              <Link to={'/login'} className="btn btn-primary">Login/Register</Link>
+              {
+                !user ? <Link className="btn btn-primary bg-red-600">Logout</Link> :
+
+              <Link to={'/login'} className="btn btn-primary text-white font-bold">Login/Register</Link>
+              }
             </div>
           </div>
         </div>

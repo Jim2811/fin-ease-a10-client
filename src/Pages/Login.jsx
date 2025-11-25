@@ -11,7 +11,7 @@ const Login = () => {
     const pass = form.password.value;
     signInUser(mail, pass)
     .then(r => console.log(r))
-    .then(err => console.log(err))
+    .catch(err => console.log(err))
   };
   return (
     <>
