@@ -1,9 +1,15 @@
 import React from "react";
-import { Link, NavLink } from "react-router";
+import { Link, NavLink, useNavigate } from "react-router";
 import useAuth from "../Hooks/useAuth";
 import ProfilePic from "../assets/default-profile.png";
 const LogoutAndProfile = () => {
-  const { user } = useAuth();
+  const { user, logout } = useAuth();
+  const navigate = useNavigate()
+  const handleLogout = () =>{
+    logout()
+    .then(()=> navigate('/'))
+    .catch(err => console.error(err));
+  }
   return (
     <>
       <div className="flex items-center gap-1">
@@ -32,7 +38,7 @@ const LogoutAndProfile = () => {
                   </li>
                 </ul>
         </div>
-        <Link className="btn btn-primary bg-red-600">Logout</Link>
+        <Link className="btn btn-primary bg-red-600" onClick={handleLogout}>Logout</Link>
       </div>
     </>
   );

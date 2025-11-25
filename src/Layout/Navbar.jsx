@@ -74,9 +74,9 @@ const Navbar = () => {
             </div>
             <div className="navbar-end">
               {
-                !user ? 
-                <LogoutAndProfile/> :
-                <Link to={'/login'} className="btn btn-primary text-white font-bold">Login/Register</Link>
+                !user ? <Link to={'/login'} className="btn btn-primary text-white font-bold">Login/Register</Link>:
+                <LogoutAndProfile/> 
+                
               }
             </div>
           </div>
