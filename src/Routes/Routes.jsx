@@ -8,6 +8,7 @@ import PrivateRoute from './PrivateRoute'
 import AddTransaction from '../Pages/AddTransaction'
 import MyTransactions from '../Pages/MyTransactions'
 import Reports from '../Pages/Reports'
+import Spinner from "../Components/Spinner";
 
 const router = createBrowserRouter([
   {

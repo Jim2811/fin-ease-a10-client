@@ -1,7 +1,7 @@
 import React from "react";
-import google from "../assets/Google.svg";
 import { Link } from "react-router";
 import useAuth from "../Hooks/useAuth";
+import GoogleSignIn from "../Components/Button/GoogleSignIn";
 const Login = () => {
   const {signInUser} = useAuth()
   const handleLogin = (e) => {
@@ -67,10 +67,7 @@ const Login = () => {
           </fieldset>
         </form>
         <h2 className="text-center font-bold text-xl py-2">Or</h2>
-        <button className="btn bg-white text-black border-[#e5e5e5]">
-          <img src={google} alt="" />
-          Login with Google
-        </button>
+        <GoogleSignIn></GoogleSignIn>
       </div>
     </>
   );
