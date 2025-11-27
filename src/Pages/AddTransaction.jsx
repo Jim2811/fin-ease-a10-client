@@ -4,44 +4,57 @@ import useAuth from "../Hooks/useAuth";
 const AddTransaction = () => {
 
   const { user } = useAuth();
+
   const [type, setType] = useState("Income");
-  const [category, setCategory] = useState("Salary");
+  const [category, setCategory] = useState("");
+  const [source, setSource] = useState("");
+
+  const incomeCategories = ["Salary", "Bonus", "Investment", "Gift", "Interest", "Others"];
+  const expenseCategories = ["Food", "Rent", "Transport", "Shopping", "Health", "Others"];
+
+  const categories = type === "Income" ? incomeCategories : expenseCategories;
 
   const handleAddTransaction = (e) => {
     e.preventDefault();
-
     const form = e.target;
-    const amount = parseFloat(form.amount.value);
+    const amount = parseInt(form.amount.value);
     const description = form.description.value;
     const date = form.date.value;
-    const email = user?.email;
-    const name = user?.displayName;
+
+    const finalCategory = category === "Others" ? `Others - ${source}` : category;
 
     const newTransaction = {
       type,
-      category,
+      category: finalCategory,
       amount,
       description,
       date,
-      email,
-      name,
+      email: user?.email,
+      name: user?.displayName,
     };
 
     console.log("Transaction Data:", newTransaction);
+    form.reset();
+    setCategory("");
+    setSource("");
   };
 
   return (
-    <div className="mx-auto p-6 bg-gradient-to-br from-primary/10 via-base-100 to-secondary/10 shadow-md rounded-md">
+    <div className="mx-auto p-6 bg-gradient-to-br from-primary/10 via-base-100 to-secondary/10">
       <h1 className="text-primary text-center font-extrabold text-3xl md:text-5xl my-5">Add Transaction</h1>
-      <form onSubmit={handleAddTransaction} className="space-y-3 w-9/12 md:w-7/12 mx-auto">
+      <form onSubmit={handleAddTransaction} className="space-y-4">
+
         {/* Type */}
         <div>
-          <label className="block mb-1">Type</label>
+          <label className="block mb-1 font-semibold">Type</label>
           <select
             value={type}
-            onChange={(e) => setType(e.target.value)}
+            onChange={(e) => {
+              setType(e.target.value);
+              setCategory("");
+              setSource("");
+            }}
             className="select select-bordered w-full"
-            required
           >
             <option value="Income">Income</option>
             <option value="Expense">Expense</option>
@@ -50,24 +63,39 @@ const AddTransaction = () => {
 
         {/* Category */}
         <div>
-          <label className="block mb-1">Category</label>
+          <label className="block mb-1 font-semibold">Category</label>
           <select
             value={category}
             onChange={(e) => setCategory(e.target.value)}
             className="select select-bordered w-full"
             required
           >
-            <option value="Home">Home</option>
-            <option value="Food">Food</option>
-            <option value="Transport">Transport</option>
-            <option value="Salary">Salary</option>
-            <option value="Shopping">Shopping</option>
+            <option value="">Select Category</option>
+            {categories.map((cat) => (
+              <option key={cat} value={cat}>
+                {cat}
+              </option>
+            ))}
           </select>
         </div>
 
+        {category === "Others" && (
+          <div>
+            <label className="block mb-1 font-semibold">What is your {type.toLowerCase()}  category?</label>
+            <input
+              type="text"
+              value={source}
+              onChange={(e) => setSource(e.target.value)}
+              placeholder={`Write your ${type.toLowerCase()} category`}
+              className="input input-bordered w-full"
+              required
+            />
+          </div>
+        )}
+
         {/* Amount */}
         <div>
-          <label className="block mb-1">Amount</label>
+          <label className="block mb-1 font-semibold">Amount</label>
           <input
             type="number"
             name="amount"
@@ -79,29 +107,24 @@ const AddTransaction = () => {
 
         {/* Description */}
         <div>
-          <label className="block mb-1">Description</label>
+          <label className="block mb-1 font-semibold">Description</label>
           <textarea
             name="description"
+            className="textarea textarea-bordered w-full h-28 resize-none"
             placeholder="Write short description"
-            className="textarea textarea-bordered w-full h-24 resize-none"
             required
           ></textarea>
         </div>
 
         {/* Date */}
         <div>
-          <label className="block mb-1">Date</label>
-          <input
-            type="date"
-            name="date"
-            className="input input-bordered w-full"
-            required
-          />
+          <label className="block mb-1 font-semibold">Date</label>
+          <input type="date" name="date" className="input input-bordered w-full" required />
         </div>
 
-        {/* User Info (read-only) */}
+        {/* User Info */}
         <div>
-          <label className="block mb-1">User Email</label>
+          <label className="block mb-1 font-semibold">User Email</label>
           <input
             type="email"
             value={user?.email || ""}
@@ -111,7 +134,7 @@ const AddTransaction = () => {
         </div>
 
         <div>
-          <label className="block mb-1">User Name</label>
+          <label className="block mb-1 font-semibold">User Name</label>
           <input
             type="text"
             value={user?.displayName || ""}
@@ -120,8 +143,7 @@ const AddTransaction = () => {
           />
         </div>
 
-        {/* Submit */}
-        <button type="submit" className="btn btn-accent w-full mt-4 hover:btn-primary">
+        <button type="submit" className="btn btn-primary w-full">
           Add Transaction
         </button>
       </form>
