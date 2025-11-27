@@ -2,7 +2,7 @@ import React from "react";
 import Logo from "../assets/Logo.png";
 import { Link, NavLink } from "react-router";
 import useAuth from "../Hooks/useAuth";
-import LogoutAndProfile from "../Components/LogoutandProfile";
+import LogoutAndProfile from "../Components/LogoutAndProfile";
 const Navbar = () => {
   const {user} = useAuth()
   return (

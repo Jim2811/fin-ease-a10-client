@@ -1,16 +1,19 @@
 import React from "react";
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
 import useAuth from "../Hooks/useAuth";
 import GoogleSignIn from "../Components/Button/GoogleSignIn";
 const Login = () => {
   const {signInUser} = useAuth()
+  const navigate = useNavigate()
   const handleLogin = (e) => {
     e.preventDefault();
      const form = e.target;
     const mail = form.email.value;
     const pass = form.password.value;
     signInUser(mail, pass)
-    .then(r => console.log(r))
+    .then(() => {
+      navigate('/')
+    })
     .catch(err => console.log(err))
   };
   return (

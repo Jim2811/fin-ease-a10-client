@@ -1,10 +1,11 @@
 import React, { useState } from "react";
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
 import useAuth from "../Hooks/useAuth";
 import { updateProfile } from "firebase/auth";
 import GoogleSignIn from "../Components/Button/GoogleSignIn";
 const Register = () => {
   const {createUser} = useAuth()
+  const navigate = useNavigate()
   const [success, setSuccess] = useState(null)
   const [error, setError] = useState(null)
   const handleSubmit = (e) =>{
@@ -16,6 +17,7 @@ const Register = () => {
     const pass = form.pass.value;
     createUser(mail, pass)
     .then(r => {
+      navigate('/')
       return updateProfile(r.user, {
         displayName: name,
         photoURL: photo
