@@ -31,7 +31,10 @@ const router = createBrowserRouter([
         Component: PrivateRoute,
         children: [
           { path: "/add-transaction", Component: AddTransaction},
-          { path: "/my-transactions", Component: MyTransactions  },
+          { path: "/my-transactions", 
+            Component: MyTransactions,
+            loader: ()=> fetch('http://localhost:3000/my-transactions')
+          },
           { path: "/reports", Component: Reports  },
         ],
       },
