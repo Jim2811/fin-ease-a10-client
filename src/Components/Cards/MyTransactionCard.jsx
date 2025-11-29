@@ -17,7 +17,7 @@ const MyTransactionCard = ({myTransaction}) => {
                   <span className="font-bold">Amount:</span> {myTransaction.amount}
                 </p>
                 <p>
-                  <span className="font-bold">Date:</span> {myTransaction.date}
+                  <span className="font-bold">Date:</span> {myTransaction.date.split("T")[0]}
                 </p>
                 <div className="card-actions md:justify-end justify-center">
                   <div className="flex gap-2 pt-5">
