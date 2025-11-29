@@ -42,10 +42,10 @@ const AddTransaction = () => {
   return (
     <div className="mx-auto p-6 bg-gradient-to-br from-primary/10 via-base-100 to-secondary/10">
       <h1 className="text-primary text-center font-extrabold text-3xl md:text-5xl my-5">Add Transaction</h1>
-      <form onSubmit={handleAddTransaction} className="space-y-4">
+      <form onSubmit={handleAddTransaction} className="space-y-4b bg-base-100 w-11/12 md:w-7/12 p-5 mx-auto my-3 shadow-xl rounded-2xl">
 
         {/* Type */}
-        <div>
+        <div className="mb-3">
           <label className="block mb-1 font-semibold">Type</label>
           <select
             value={type}
@@ -62,7 +62,7 @@ const AddTransaction = () => {
         </div>
 
         {/* Category */}
-        <div>
+        <div className="mb-3">
           <label className="block mb-1 font-semibold">Category</label>
           <select
             value={category}
@@ -80,7 +80,7 @@ const AddTransaction = () => {
         </div>
 
         {category === "Others" && (
-          <div>
+          <div className="mb-3">
             <label className="block mb-1 font-semibold">What is your {type.toLowerCase()}  category?</label>
             <input
               type="text"
@@ -94,7 +94,7 @@ const AddTransaction = () => {
         )}
 
         {/* Amount */}
-        <div>
+        <div className="mb-3">
           <label className="block mb-1 font-semibold">Amount</label>
           <input
             type="number"
@@ -106,7 +106,7 @@ const AddTransaction = () => {
         </div>
 
         {/* Description */}
-        <div>
+        <div className="mb-3">
           <label className="block mb-1 font-semibold">Description</label>
           <textarea
             name="description"
@@ -117,13 +117,13 @@ const AddTransaction = () => {
         </div>
 
         {/* Date */}
-        <div>
+        <div className="mb-3">
           <label className="block mb-1 font-semibold">Date</label>
           <input type="date" name="date" className="input input-bordered w-full" required />
         </div>
 
         {/* User Info */}
-        <div>
+        <div className="mb-3">
           <label className="block mb-1 font-semibold">User Email</label>
           <input
             type="email"
@@ -133,7 +133,7 @@ const AddTransaction = () => {
           />
         </div>
 
-        <div>
+        <div className="mb-3">
           <label className="block mb-1 font-semibold">User Name</label>
           <input
             type="text"

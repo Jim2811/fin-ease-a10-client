@@ -4,7 +4,6 @@ import useAuth from "../Hooks/useAuth";
 import ProfilePic from "../assets/default-profile.png";
 const LogoutAndProfile = () => {
   const { user, logout } = useAuth();
-  console.log(user);
   const navigate = useNavigate();
   const handleLogout = () => {
     logout()
@@ -34,19 +33,9 @@ const LogoutAndProfile = () => {
                 <span className="font-bold">Email: </span> <span>{user.email}</span>
               </p>
             </div>
-            <div className="py-2">
-              <li>
-                <NavLink to="/add-transaction">Add Transaction</NavLink>
-              </li>
-              <li>
-                <NavLink to="/my-transactions">My Transactions</NavLink>
-              </li>
-              <li>
-                <NavLink to="/reports">Reports</NavLink>
-              </li>
-            </div>
+            
             <Link
-              className="btn btn-primary bg-red-600 w-full hover:bg-white hover:border-red-600 hover:text-black"
+              className="btn btn-primary mt-3 bg-red-600 w-full hover:bg-white hover:border-red-600 hover:text-black"
               onClick={handleLogout}
             >
               Logout
