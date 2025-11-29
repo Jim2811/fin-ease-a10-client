@@ -4,10 +4,10 @@ import Root from "../Root/Root";
 import Home from "../Layout/Home";
 import Login from "../Pages/Login";
 import Register from "../Pages/Register";
-import PrivateRoute from './PrivateRoute'
-import AddTransaction from '../Pages/AddTransaction'
-import MyTransactions from '../Pages/MyTransactions'
-import Reports from '../Pages/Reports'
+import PrivateRoute from "./PrivateRoute";
+import AddTransaction from "../Pages/AddTransaction";
+import MyTransactions from "../Pages/MyTransactions";
+import Reports from "../Pages/Reports";
 import Spinner from "../Components/Spinner";
 
 const router = createBrowserRouter([
@@ -30,12 +30,19 @@ const router = createBrowserRouter([
       {
         Component: PrivateRoute,
         children: [
-          { path: "/add-transaction", Component: AddTransaction},
-          { path: "/my-transactions", 
+          { path: "/add-transaction", 
+            Component: AddTransaction },
+          {
+            path: "/my-transactions",
             Component: MyTransactions,
-            loader: ()=> fetch('http://localhost:3000/my-transactions')
+            loader: async () => {
+              const res = await fetch("http://localhost:3000/transactions");
+              const data = await res.json();
+              return data;
+            },
           },
-          { path: "/reports", Component: Reports  },
+          { path: "/reports", 
+            Component: Reports },
         ],
       },
     ],

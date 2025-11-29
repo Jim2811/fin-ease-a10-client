@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import useAuth from "../Hooks/useAuth";
+import axios from "axios";
 
 const AddTransaction = () => {
 
@@ -33,10 +34,13 @@ const AddTransaction = () => {
       name: user?.displayName,
     };
 
-    console.log("Transaction Data:", newTransaction, date);
-    form.reset();
-    setCategory("");
-    setSource("");
+    axios.post('http://localhost:3000/transactions', newTransaction)
+    .then((d) =>{
+      console.log(d.data)
+      form.reset();
+      setCategory("");
+      setSource("");})
+      .catch(err => console.log(err.message))
   };
 
   return (
