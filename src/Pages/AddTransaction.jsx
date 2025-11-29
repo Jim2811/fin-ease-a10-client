@@ -9,6 +9,7 @@ const AddTransaction = () => {
   const [category, setCategory] = useState("");
   const [source, setSource] = useState("");
 
+  const date = new Date().toISOString();
   const incomeCategories = ["Salary", "Bonus", "Investment", "Gift", "Interest", "Others"];
   const expenseCategories = ["Food", "Rent", "Transport", "Shopping", "Health", "Others"];
 
@@ -19,7 +20,6 @@ const AddTransaction = () => {
     const form = e.target;
     const amount = parseInt(form.amount.value);
     const description = form.description.value;
-    const date = form.date.value;
 
     const finalCategory = category === "Others" ? `Others - ${source}` : category;
 
@@ -33,7 +33,7 @@ const AddTransaction = () => {
       name: user?.displayName,
     };
 
-    console.log("Transaction Data:", newTransaction);
+    console.log("Transaction Data:", newTransaction, date);
     form.reset();
     setCategory("");
     setSource("");
@@ -42,111 +42,138 @@ const AddTransaction = () => {
   return (
     <div className="mx-auto p-6 bg-gradient-to-br from-primary/10 via-base-100 to-secondary/10">
       <h1 className="text-primary text-center font-extrabold text-3xl md:text-5xl my-5">Add Transaction</h1>
-      <form onSubmit={handleAddTransaction} className="space-y-4b bg-base-100 w-11/12 md:w-7/12 p-5 mx-auto my-3 shadow-xl rounded-2xl">
+      <form
+    onSubmit={handleAddTransaction}
+    className="card w-11/12 md:w-7/12 mx-auto bg-base-100 shadow-2xl p-6 rounded-2xl mt-7"
+  >
+    {/* Type */}
+    <div className="form-control mb-4">
+      <label className="label">
+        <span className="label-text font-semibold">
+          Type <span className="text-red-600">*</span>
+        </span>
+      </label>
+      <select
+        value={type}
+        onChange={(e) => {
+          setType(e.target.value);
+          setCategory("");
+          setSource("");
+        }}
+        className="select select-bordered w-full"
+        required
+      >
+        <option value="Income">Income</option>
+        <option value="Expense">Expense</option>
+      </select>
+    </div>
 
-        {/* Type */}
-        <div className="mb-3">
-          <label className="block mb-1 font-semibold">Type</label>
-          <select
-            value={type}
-            onChange={(e) => {
-              setType(e.target.value);
-              setCategory("");
-              setSource("");
-            }}
-            className="select select-bordered w-full"
-          >
-            <option value="Income">Income</option>
-            <option value="Expense">Expense</option>
-          </select>
-        </div>
+    {/* Category */}
+    <div className="form-control mb-4">
+      <label className="label">
+        <span className="label-text font-semibold">
+          Category <span className="text-red-600">*</span>
+        </span>
+      </label>
+      <select
+        value={category}
+        onChange={(e) => setCategory(e.target.value)}
+        className="select select-bordered w-full"
+        required
+      >
+        <option value="">Select Category</option>
+        {categories.map((category) => (
+          <option key={category} value={category}>
+            {category}
+          </option>
+        ))}
+      </select>
+    </div>
 
-        {/* Category */}
-        <div className="mb-3">
-          <label className="block mb-1 font-semibold">Category</label>
-          <select
-            value={category}
-            onChange={(e) => setCategory(e.target.value)}
-            className="select select-bordered w-full"
-            required
-          >
-            <option value="">Select Category</option>
-            {categories.map((cat) => (
-              <option key={cat} value={cat}>
-                {cat}
-              </option>
-            ))}
-          </select>
-        </div>
+    {/* Others input (conditional) */}
+    {category === "Others" && (
+      <div className="form-control mb-4">
+        <label className="label">
+          <span className="label-text font-semibold">
+            What is your {type.toLowerCase()} category?{" "}
+            <span className="text-red-600">*</span>
+          </span>
+        </label>
+        <input
+          type="text"
+          value={source}
+          onChange={(e) => setSource(e.target.value)}
+          placeholder={`Write your ${type.toLowerCase()} category`}
+          className="input input-bordered w-full"
+          required
+        />
+      </div>
+    )}
 
-        {category === "Others" && (
-          <div className="mb-3">
-            <label className="block mb-1 font-semibold">What is your {type.toLowerCase()}  category?</label>
-            <input
-              type="text"
-              value={source}
-              onChange={(e) => setSource(e.target.value)}
-              placeholder={`Write your ${type.toLowerCase()} category`}
-              className="input input-bordered w-full"
-              required
-            />
-          </div>
-        )}
+    {/* Amount */}
+    <div className="form-control mb-4">
+      <label className="label">
+        <span className="label-text font-semibold">
+          Amount <span className="text-red-600">*</span>
+        </span>
+      </label>
+      <input
+        type="number"
+        name="amount"
+        placeholder="Enter amount"
+        className="input input-bordered w-full"
+        required
+      />
+    </div>
 
-        {/* Amount */}
-        <div className="mb-3">
-          <label className="block mb-1 font-semibold">Amount</label>
-          <input
-            type="number"
-            name="amount"
-            placeholder="Enter amount"
-            className="input input-bordered w-full"
-            required
-          />
-        </div>
+    {/* Description */}
+    <div className="form-control mb-4">
+      <label className="label">
+        <span className="label-text font-semibold">
+          Description <span className="text-red-600">*</span>
+        </span>
+      </label>
+      <textarea
+        name="description"
+        className="textarea textarea-bordered w-full h-28 resize-none"
+        placeholder="Write short description"
+        required
+      ></textarea>
+    </div>
 
-        {/* Description */}
-        <div className="mb-3">
-          <label className="block mb-1 font-semibold">Description</label>
-          <textarea
-            name="description"
-            className="textarea textarea-bordered w-full h-28 resize-none"
-            placeholder="Write short description"
-            required
-          ></textarea>
-        </div>
+    {/* User Email */}
+    <div className="form-control mb-4">
+      <label className="label">
+        <span className="label-text font-semibold">User Email</span>
+      </label>
+      <input
+        type="email"
+        value={user?.email || ""}
+        readOnly
+        className="input input-bordered w-full bg-gray-100"
+      />
+    </div>
 
-        {/* Date */}
-        <div className="mb-3">
-          <label className="block mb-1 font-semibold">Date</label>
-          <input type="date" name="date" className="input input-bordered w-full" required />
-        </div>
+    {/* User Name */}
+    <div className="form-control mb-6">
+      <label className="label">
+        <span className="label-text font-semibold">User Name</span>
+      </label>
+      <input
+        type="text"
+        value={user?.displayName || ""}
+        readOnly
+        className="input input-bordered w-full bg-gray-100"
+      />
+    </div>
 
-        {/* User Info */}
-        <div className="mb-3">
-          <label className="block mb-1 font-semibold">User Email</label>
-          <input
-            type="email"
-            value={user?.email || ""}
-            readOnly
-            className="input input-bordered w-full bg-gray-100"
-          />
-        </div>
-
-        <div className="mb-3">
-          <label className="block mb-1 font-semibold">User Name</label>
-          <input
-            type="text"
-            value={user?.displayName || ""}
-            readOnly
-            className="input input-bordered w-full bg-gray-100"
-          />
-        </div>
-
-        <button type="submit" className="btn btn-primary w-full">
-          Add Transaction
-        </button>
-      </form>
+    {/* Submit Button */}
+    <div className="form-control">
+      <button type="submit" className="btn btn-primary w-full">
+        Add Transaction
+      </button>
+    </div>
+  </form>
     </div>
   );
 };
