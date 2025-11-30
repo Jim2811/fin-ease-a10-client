@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 import useAuth from "../Hooks/useAuth";
-import axios from "axios";
-
+import useAxios from "../Hooks/useAxios"
 const AddTransaction = () => {
 
   const { user } = useAuth();
 
+  const axiosInstance = useAxios();
   const [type, setType] = useState("Income");
   const [category, setCategory] = useState("");
   const [source, setSource] = useState("");
@@ -34,7 +34,7 @@ const AddTransaction = () => {
       name: user?.displayName,
     };
 
-    axios.post('http://localhost:3000/transactions', newTransaction)
+    axiosInstance.post('/transactions', newTransaction)
     .then((d) =>{
       console.log(d.data)
       form.reset();

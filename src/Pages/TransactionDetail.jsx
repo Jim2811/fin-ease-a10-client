@@ -1,11 +1,18 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useLoaderData } from "react-router";
+import useAxios from "../Hooks/useAxios";
 
 const TransactionDetail = () => {
   const data = useLoaderData();
-  const result = data.result;
+  const result = data.result; 
+  const axiosInstance = useAxios()
   const date = result.date.split("T")[0];
   const time = result.date.split("T")[1].split(".")[0];
+  const [totalAmount, setTotalAmount] = useState(0);
+  useEffect(()=>{
+    axiosInstance.get(`/category-total-amount?category=${result.category}`).
+    then((r)=> setTotalAmount(r.data[0].total))
+  },[result.category])
   return (
     <div className="min-h-screen  py-6">
       <div className="flex flex-col justify-center items-center gap-3 mt-6">
@@ -47,7 +54,7 @@ const TransactionDetail = () => {
             <h3 className="text-primary font-bold ">
               Total amount of this category:{""}
             </h3>
-            <span>money</span>
+            <span>{totalAmount}৳</span>
           </div>
           <Link className="btn btn-primary mt-3 w-4/12 mx-auto" to={'/my-transactions'}>Go to My Transaction</Link>
         </div>
