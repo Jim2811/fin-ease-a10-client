@@ -1,5 +1,5 @@
 import { Component } from "react";
-import { createBrowserRouter } from "react-router";
+import { createBrowserRouter } from "react-router-dom";
 import Root from "../Root/Root";
 import Home from "../Layout/Home";
 import Login from "../Pages/Login";
@@ -43,9 +43,9 @@ const router = createBrowserRouter([
             },
           },
           {
-            path: "/my-transactions/transaction/:id",
+            path: "/transaction/:id",
+            loader: ({params}) => fetch(`http://localhost:3000/transactions/${params.id}`),
             Component: TransactionDetail,
-            loader: ({params}) => fetch(`http://localhost:3000/transactions/${params.id}`)
           },
           { path: "/reports", 
             Component: Reports },

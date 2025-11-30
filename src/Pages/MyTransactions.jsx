@@ -1,5 +1,5 @@
 import React from "react";
-import { Link, useLoaderData } from "react-router";
+import { Link, Outlet, useLoaderData } from "react-router";
 import MyTransactionCard from "../Components/Cards/MyTransactionCard";
 
 const MyTransactions = () => {

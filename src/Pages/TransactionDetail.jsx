@@ -4,7 +4,8 @@ import { Link, useLoaderData } from "react-router";
 const TransactionDetail = () => {
   const data = useLoaderData();
   const result = data.result;
-  console.log(result);
+  const date = result.date.split("T")[0];
+  const time = result.date.split("T")[1].split(".")[0];
   return (
     <div className="min-h-screen  py-6">
       <div className="flex flex-col justify-center items-center gap-3 mt-6">
@@ -12,31 +13,44 @@ const TransactionDetail = () => {
           Transaction Details
         </h1>
         <div className="w-10/12 md:w-7/12 bg-gradient-to-br from-primary/10 via-base-100 to-secondary/10 py-7 px-5 rounded-2xl shadow-2xl text-xl grid gap-2">
-        {/* Transaction Type */}
+          {/* Transaction Type */}
+          <div>
+            <h3 className="text-primary font-bold">Type: </h3>
+            <span
+              className={`font-bold ${
+                result.type === "Income" ? "text-green-600" : "text-red-600"
+              }`}
+            >
+              {result.type}
+            </span>
+          </div>
+          {/* description */}
           <div className="text-gray-700">
-                <h3 className="text-primary font-bold">Type: </h3> 
-                <span>Income</span>
+            <h3 className="text-primary font-bold">Description: </h3>
+            <span>{result.description}</span>
           </div>
           {/* Amount */}
-          <div className="text-gray-700">
-                <h3 className="text-primary font-bold ">Amount: </h3> 
-                <span>5000৳</span>
+          <div>
+            <h3 className="text-primary font-bold ">Amount: </h3>
+            <span className="text-secondary">{result.amount}৳</span>
           </div>
           {/* date */}
           <div className="text-gray-700">
-                <h3 className="text-primary font-bold ">Date: </h3> 
-                <span>111/111/11</span>
+            <h3 className="text-primary font-bold ">Date: </h3>
+            <span>{`${date} ${time}`}</span>
           </div>
           <div className="text-gray-700">
-                <h3 className="text-primary font-bold ">Category: </h3> 
-                <span>Category</span>
+            <h3 className="text-primary font-bold ">Category: </h3>
+            <span>{result.category}</span>
           </div>
           <div className="text-gray-700">
-                <h3 className="text-primary font-bold ">Total amount of this category: </h3> 
-                <span>money</span>
+            <h3 className="text-primary font-bold ">
+              Total amount of this category:{""}
+            </h3>
+            <span>money</span>
           </div>
+          <Link className="btn btn-primary mt-3 w-4/12 mx-auto" to={'/my-transactions'}>Go to My Transaction</Link>
         </div>
-
       </div>
     </div>
   );
