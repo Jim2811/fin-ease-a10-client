@@ -1,6 +1,7 @@
 import React from 'react';
 
 import { Link } from 'react-router';
+import DeleteBtn from '../Button/DeleteBtn';
 
 const MyTransactionCard = ({myTransaction}) => {
     const type = myTransaction.type.charAt(0).toUpperCase() + myTransaction.type.slice(1).toLowerCase();
@@ -25,9 +26,7 @@ const MyTransactionCard = ({myTransaction}) => {
                   <div className="flex gap-2 pt-5">
                     <Link className="btn btn-primary" to={`/transaction/${myTransaction._id}`}>Details</Link>
                     <Link className="btn btn-accent" to={`/update-transaction/${myTransaction._id}`}>Update</Link>
-                    <button className="btn btn-primary bg-red-600 hover:bg-red-700">
-                      Delete
-                    </button>
+                    <DeleteBtn myTransaction ={myTransaction}></DeleteBtn>
                   </div>
                 </div>
               </div>

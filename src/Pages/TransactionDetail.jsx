@@ -4,18 +4,19 @@ import useAxios from "../Hooks/useAxios";
 
 const TransactionDetail = () => {
   const data = useLoaderData();
-  const result = data.result; 
-  const axiosInstance = useAxios()
-  const date = result.date.includes('T') ? `${result.date.split("T")[0]} ${
-    result.date.split("T")[1].split(".")[0]
-  }` : `${result.date.split(" ")[0]} ${
-    result.date.split(" ")[1]
-  }`
+  const result = data.result;
+  const axiosInstance = useAxios();
+  const date = result.date.includes("T")
+    ? `${result.date.split("T")[0]} ${result.date.split("T")[1].split(".")[0]}`
+    : `${result.date.split(" ")[0]} ${result.date.split(" ")[1]}`;
   const [totalAmount, setTotalAmount] = useState(0);
-  useEffect(()=>{
-    axiosInstance.get(`/category-total-amount?category=${result.category}`).
-    then((r)=> setTotalAmount(r.data[0].total))
-  },[result.category])
+  // total amount in single category
+  useEffect(() => {
+    axiosInstance
+      .get(`/category-total-amount?category=${result.category}`)
+      .then((r) => setTotalAmount(r.data[0].total));
+  }, [result.category]);
+
   return (
     <div className="min-h-screen  py-6">
       <div className="flex flex-col justify-center items-center gap-3 mt-6">
@@ -59,7 +60,20 @@ const TransactionDetail = () => {
             </h3>
             <span>{totalAmount}৳</span>
           </div>
-          <Link className="btn btn-primary mt-3 w-4/12 mx-auto" to={'/my-transactions'}>Go to My Transaction</Link>
+          <div className="flex md:flex-row flex-col items-center justify-center gap-2 mt-4">
+            <Link
+              className="btn btn-primary w-full md:w-5/12"
+              to={"/my-transactions"}
+            >
+              Go to My Transaction
+            </Link>
+            <Link
+              className="btn btn-accent w-full md:w-5/12"
+              to={`/update-transaction/${result._id}`}
+            >
+              Update
+            </Link>
+          </div>
         </div>
       </div>
     </div>

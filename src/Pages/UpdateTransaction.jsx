@@ -1,17 +1,19 @@
 import React, { useState } from "react";
-import { useLoaderData } from "react-router";
+import { useLoaderData, useNavigate } from "react-router";
 import useAuth from "../Hooks/useAuth";
 import useAxios from "../Hooks/useAxios";
+import { toast } from "react-toastify";
 
 const UpdateTransaction = () => {
   const data = useLoaderData().result;
+  const navigate = useNavigate();
   const axiosInstance = useAxios();
   const { user } = useAuth();
   const [type, setType] = useState("Income");
-  const [category, setCategory] = useState("");
-  const defaultDate = `${data.date.split("T")[0]} ${
+  // const [category, setCategory] = useState("");
+  const defaultDate = data.date.includes('T') ? `${data.date.split("T")[0]} ${
     data.date.split("T")[1].split(".")[0]
-  }`;
+  }`: data.date ;
   const incomeCategories = [
     "Salary",
     "Bonus",
@@ -33,6 +35,7 @@ const UpdateTransaction = () => {
     e.preventDefault();
     const form = e.target;
     const type = form.type.value;
+    const category = form.category.value
     // const date = form.date.value;
     const amount = parseInt(form.amount.value);
     const description = form.description.value;
@@ -48,8 +51,9 @@ const UpdateTransaction = () => {
 
     axiosInstance.put(`/transactions/${data._id}`, updateData).then(() => {
       form.reset();
-      setCategory("");
-      alert('Success')
+      navigate(`/transaction/${data._id}`)
+      // setCategory("");
+      toast.success('Update Successful')
     });
   };
   return (
@@ -80,8 +84,9 @@ const UpdateTransaction = () => {
               <span className="label-text font-semibold">Category</span>
             </label>
             <select
-              onChange={(e) => setCategory(e.target.value)}
+              // onChange={(e) => setCategory(e.target.value)}
               defaultValue={data.category}
+              name="category"
               className="select select-bordered w-full"
             >
               {categories.map((category) => (

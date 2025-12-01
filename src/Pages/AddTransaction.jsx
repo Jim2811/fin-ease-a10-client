@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import useAuth from "../Hooks/useAuth";
 import useAxios from "../Hooks/useAxios"
+import { toast } from "react-toastify";
 const AddTransaction = () => {
 
   const { user } = useAuth();
@@ -35,7 +36,9 @@ const AddTransaction = () => {
     .then((d) =>{
       console.log(d.data)
       form.reset();
-      setCategory("");})
+      setCategory("");
+      toast.success("Transaction details added successfully!! 😊")
+    })
       .catch(err => console.log(err.message))
   };
 
