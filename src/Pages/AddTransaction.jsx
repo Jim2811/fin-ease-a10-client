@@ -8,7 +8,6 @@ const AddTransaction = () => {
   const axiosInstance = useAxios();
   const [type, setType] = useState("Income");
   const [category, setCategory] = useState("");
-  const [source, setSource] = useState("");
 
   const date = new Date().toISOString();
   const incomeCategories = ["Salary", "Bonus", "Investment", "Gift", "Interest", "Others"];
@@ -22,11 +21,9 @@ const AddTransaction = () => {
     const amount = parseInt(form.amount.value);
     const description = form.description.value;
 
-    const finalCategory = category === "Others" ? `Others - ${source}` : category;
-
     const newTransaction = {
       type,
-      category: finalCategory,
+      category,
       amount,
       description,
       date,
@@ -38,8 +35,7 @@ const AddTransaction = () => {
     .then((d) =>{
       console.log(d.data)
       form.reset();
-      setCategory("");
-      setSource("");})
+      setCategory("");})
       .catch(err => console.log(err.message))
   };
 
@@ -62,7 +58,6 @@ const AddTransaction = () => {
         onChange={(e) => {
           setType(e.target.value);
           setCategory("");
-          setSource("");
         }}
         className="select select-bordered w-full"
         required
@@ -93,26 +88,6 @@ const AddTransaction = () => {
         ))}
       </select>
     </div>
-
-    {/* Others input (conditional) */}
-    {category === "Others" && (
-      <div className="form-control mb-4">
-        <label className="label">
-          <span className="label-text font-semibold">
-            What is your {type.toLowerCase()} category?{" "}
-            <span className="text-red-600">*</span>
-          </span>
-        </label>
-        <input
-          type="text"
-          value={source}
-          onChange={(e) => setSource(e.target.value)}
-          placeholder={`Write your ${type.toLowerCase()} category`}
-          className="input input-bordered w-full"
-          required
-        />
-      </div>
-    )}
 
     {/* Amount */}
     <div className="form-control mb-4">

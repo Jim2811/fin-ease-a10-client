@@ -8,7 +8,7 @@ const MyTransactionCard = ({myTransaction}) => {
         <div>
             <div className="card bg-base-100 w-full mx-auto shadow-lg">
             <div className="card-body">
-              <h2 className="card-title font-bold text-primary text-xl">
+              <h2 className={`card-title font-bold text-xl ${myTransaction.type === 'Income' ? 'text-accent' : 'text-primary'}`}>
                 {type}
               </h2>
               <div>
@@ -19,13 +19,12 @@ const MyTransactionCard = ({myTransaction}) => {
                   <span className="font-bold">Amount:</span> {myTransaction.amount}৳
                 </p>
                 <p>
-                  <span className="font-bold">Date:</span> {myTransaction.date.split("T")[0]}
+                  <span className="font-bold">Date:</span> {myTransaction.date.includes('T') ? myTransaction.date.split("T")[0] : myTransaction.date.split(' ')[0]}
                 </p>
                 <div className="card-actions md:justify-end justify-center">
                   <div className="flex gap-2 pt-5">
-                    {/* <TranDetBtn myTransaction={myTransaction}></TranDetBtn> */}
                     <Link className="btn btn-primary" to={`/transaction/${myTransaction._id}`}>Details</Link>
-                    <button className="btn btn-accent">Update</button>
+                    <Link className="btn btn-accent" to={`/update-transaction/${myTransaction._id}`}>Update</Link>
                     <button className="btn btn-primary bg-red-600 hover:bg-red-700">
                       Delete
                     </button>

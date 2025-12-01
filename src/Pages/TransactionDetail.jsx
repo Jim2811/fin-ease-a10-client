@@ -6,8 +6,11 @@ const TransactionDetail = () => {
   const data = useLoaderData();
   const result = data.result; 
   const axiosInstance = useAxios()
-  const date = result.date.split("T")[0];
-  const time = result.date.split("T")[1].split(".")[0];
+  const date = result.date.includes('T') ? `${result.date.split("T")[0]} ${
+    result.date.split("T")[1].split(".")[0]
+  }` : `${result.date.split(" ")[0]} ${
+    result.date.split(" ")[1]
+  }`
   const [totalAmount, setTotalAmount] = useState(0);
   useEffect(()=>{
     axiosInstance.get(`/category-total-amount?category=${result.category}`).
@@ -44,7 +47,7 @@ const TransactionDetail = () => {
           {/* date */}
           <div className="text-gray-700">
             <h3 className="text-primary font-bold ">Date: </h3>
-            <span>{`${date} ${time}`}</span>
+            <span>{date}</span>
           </div>
           <div className="text-gray-700">
             <h3 className="text-primary font-bold ">Category: </h3>
