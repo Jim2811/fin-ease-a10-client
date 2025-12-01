@@ -1,9 +1,14 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link, Outlet, useLoaderData } from "react-router";
 import MyTransactionCard from "../Components/Cards/MyTransactionCard";
 
 const MyTransactions = () => {
   const myTransactions = useLoaderData();
+  const [transactions, setTransactions] = useState(myTransactions);
+  const handleDltSuccess = (id) =>{
+    const remaining = transactions.filter((t) => t._id !== id);
+    setTransactions(remaining);
+  }
   return (
     <>
       <div className="min-h-screen bg-gradient-to-br from-primary/10 via-base-100 to-secondary/10">
@@ -15,10 +20,11 @@ const MyTransactions = () => {
 
         {Array.isArray(myTransactions) ? (
           <div className="grid md:grid-cols-3 gap-4 max-w-6xl px-2 mx-auto w-full">
-            {myTransactions.map((myTransaction) => (
+            {transactions.map((myTransaction) => (
               <MyTransactionCard
                 myTransaction={myTransaction}
                 key={myTransaction._id}
+                handleDltSuccess = {handleDltSuccess}
               ></MyTransactionCard>
             ))}
           </div>

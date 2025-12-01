@@ -1,11 +1,9 @@
 import React from "react";
 import Swal from "sweetalert2";
 import useAxios from "../../Hooks/useAxios";
-import { useNavigate } from "react-router";
 
-const DeleteBtn = ({ myTransaction }) => {
+const DeleteBtn = ({ myTransaction, handleDltSuccess }) => {
   const axiosInstance = useAxios();
-  const navigate = useNavigate()
   const handleDlt = () => {
     Swal.fire({
       title: "Are you sure?",
@@ -17,13 +15,13 @@ const DeleteBtn = ({ myTransaction }) => {
       confirmButtonText: "Yes, delete it!",
     }).then((result) => {
       if (result.isConfirmed) {
-        axiosInstance.delete(`/transactions/${myTransaction._id}`).then(() => {
-          Swal.fire({
-            title: "Deleted!",
-            text: "Your transaction data has been deleted.",
-            icon: "success",
-          });
-          navigate('/my-transactions')
+        axiosInstance.delete(`/transactions/${myTransaction._id}`).then((r) => {
+                Swal.fire({
+                  title: "Deleted!",
+                  text: "Your transaction data has been deleted.",
+                  icon: "success",
+                });
+                handleDltSuccess(myTransaction._id);
         });
       }
     });
