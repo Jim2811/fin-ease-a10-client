@@ -11,6 +11,7 @@ import Reports from "../Pages/Reports";
 import Spinner from "../Components/Spinner";
 import TransactionDetail from "../Pages/TransactionDetail";
 import UpdateTransaction from "../Pages/UpdateTransaction";
+import MyProfile from "../Pages/MyProfile";
 
 const router = createBrowserRouter([
   {
@@ -51,7 +52,11 @@ const router = createBrowserRouter([
           {
             path: "/update-transaction/:id",
             loader: ({params}) => fetch(`http://localhost:3000/transactions/${params.id}`),
-            Component: UpdateTransaction            
+            Component: UpdateTransaction
+          },
+          {
+            path: '/my-profile',
+            Component: MyProfile
           },
           { path: "/reports", 
             Component: Reports },

@@ -15,7 +15,7 @@ const DeleteBtn = ({ myTransaction, handleDltSuccess }) => {
       confirmButtonText: "Yes, delete it!",
     }).then((result) => {
       if (result.isConfirmed) {
-        axiosInstance.delete(`/transactions/${myTransaction._id}`).then((r) => {
+        axiosInstance.delete(`/transactions/${myTransaction._id}`).then(() => {
                 Swal.fire({
                   title: "Deleted!",
                   text: "Your transaction data has been deleted.",
