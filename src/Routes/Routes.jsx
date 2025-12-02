@@ -12,6 +12,7 @@ import Spinner from "../Components/Spinner";
 import TransactionDetail from "../Pages/TransactionDetail";
 import UpdateTransaction from "../Pages/UpdateTransaction";
 import MyProfile from "../Pages/MyProfile";
+import UpdateProfile from "../Pages/UpdateProfile";
 
 const router = createBrowserRouter([
   {
@@ -57,6 +58,10 @@ const router = createBrowserRouter([
           {
             path: '/my-profile',
             Component: MyProfile
+          },
+          {
+            path: '/update-profile',
+            Component: UpdateProfile
           },
           { path: "/reports", 
             Component: Reports },
