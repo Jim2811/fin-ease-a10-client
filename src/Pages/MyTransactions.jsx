@@ -1,10 +1,20 @@
-import React, { useState } from "react";
-import { Link, Outlet, useLoaderData } from "react-router";
+import React, { useEffect, useState } from "react";
+import { Link } from "react-router";
 import MyTransactionCard from "../Components/Cards/MyTransactionCard";
+// import useAxios from "../Hooks/useAxios";
+import useAxiosSecure from "../Hooks/useAxiosSecure";
+import useAuth from "../Hooks/useAuth";
 
 const MyTransactions = () => {
-  const myTransactions = useLoaderData();
-  const [transactions, setTransactions] = useState(myTransactions);
+  const {user} = useAuth()
+  const axiosSecure = useAxiosSecure()
+  const [transactions, setTransactions] = useState();
+  useEffect(()=>{
+    axiosSecure.get(`/transactions?email=${user.email}`)
+    .then(res =>{
+      setTransactions(res.data)
+    })
+  }, [])
   const handleDltSuccess = (id) =>{
     const remaining = transactions.filter((t) => t._id !== id);
     setTransactions(remaining);
@@ -18,7 +28,7 @@ const MyTransactions = () => {
           </h1>
         </div>
 
-        {Array.isArray(myTransactions) ? (
+        {Array.isArray(transactions) ? (
           <div className="grid md:grid-cols-3 gap-4 max-w-6xl px-2 mx-auto w-full">
             {transactions.map((myTransaction) => (
               <MyTransactionCard

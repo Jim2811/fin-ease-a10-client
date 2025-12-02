@@ -39,11 +39,6 @@ const router = createBrowserRouter([
           {
             path: "/my-transactions",
             Component: MyTransactions,
-            loader: async () => {
-              const res = await fetch("http://localhost:3000/transactions");
-              const data = await res.json();
-              return data;
-            },
           },
           {
             path: "/transaction/:id",
