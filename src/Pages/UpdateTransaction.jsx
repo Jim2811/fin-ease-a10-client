@@ -12,9 +12,9 @@ const UpdateTransaction = () => {
   const { user } = useAuth();
   const [type, setType] = useState("Income");
   // const [category, setCategory] = useState("");
-  const defaultDate = data.date.includes('T') ? `${data.date.split("T")[0]} ${
-    data.date.split("T")[1].split(".")[0]
-  }`: data.date ;
+  const defaultDate = data.date.includes("T")
+    ? `${data.date.split("T")[0]} ${data.date.split("T")[1].split(".")[0]}`
+    : data.date;
   const incomeCategories = [
     "Salary",
     "Bonus",
@@ -36,7 +36,7 @@ const UpdateTransaction = () => {
     e.preventDefault();
     const form = e.target;
     const type = form.type.value;
-    const category = form.category.value
+    const category = form.category.value;
     // const date = form.date.value;
     const amount = parseInt(form.amount.value);
     const description = form.description.value;
@@ -45,16 +45,16 @@ const UpdateTransaction = () => {
       category,
       amount,
       description,
-    //   date,
+      //   date,
       email: user?.email,
       name: user?.displayName,
     };
 
     axiosInstance.put(`/transactions/${data._id}`, updateData).then(() => {
       form.reset();
-      navigate(`/transaction/${data._id}`)
+      navigate(`/transaction/${data._id}`);
       // setCategory("");
-      toast.success('Update Successful')
+      toast.success("Update Successful");
     });
   };
   return (

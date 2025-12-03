@@ -1,30 +1,29 @@
 import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router";
-import useAxios from "../Hooks/useAxios";
 import useAxiosSecure from "../Hooks/useAxiosSecure";
 import { toast } from "react-toastify";
+import useAuth from "../Hooks/useAuth";
 const TransactionDetail = () => {
+  const { user } = useAuth();
   const [data, setData] = useState();
   const params = useParams();
-  const axiosInstance = useAxios();
   const axiosSecure = useAxiosSecure();
-  useEffect(()=>{
-    axiosSecure.get(`transactions/${params.id}`)
-    .then(r => setData(r.data.result))
-    .catch((e) => toast.error(e.message))
-  }, [])
+  useEffect(() => {
+    axiosSecure
+      .get(`transactions/${params.id}`)
+      .then((r) => setData(r.data.result))
+      .catch((e) => toast.error(e.message));
+  }, [user?.email]);
   const date = data?.date.includes("T")
     ? `${data?.date.split("T")[0]} ${data?.date.split("T")[1].split(".")[0]}`
     : `${data?.date.split(" ")[0]} ${data?.date.split(" ")[1]}`;
   const [totalAmount, setTotalAmount] = useState(0);
   // total amount in single category
   useEffect(() => {
-    axiosInstance
+    axiosSecure
       .get(`/category-total-amount?category=${data?.category}`)
-      .then((r) => {
-        setTotalAmount(r.data[0].total)
-      });
-  }, [data?.category]);
+      .then((r) => setTotalAmount(r.data[0].total));
+  }, [data?.category, axiosSecure]);
 
   return (
     <div className="min-h-screen  py-6">
