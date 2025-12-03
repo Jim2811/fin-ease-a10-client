@@ -1,19 +1,34 @@
-import React, { useState } from "react";
-import { useLoaderData, useNavigate } from "react-router";
+import React, { useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router";
 import useAuth from "../Hooks/useAuth";
-import useAxios from "../Hooks/useAxios";
 import { toast } from "react-toastify";
+import useAxiosSecure from "../Hooks/useAxiosSecure";
+import Spinner from "../Components/Spinner";
 
 const UpdateTransaction = () => {
-  const data = useLoaderData().result;
-  console.log(data);
-  const navigate = useNavigate();
-  const axiosInstance = useAxios();
+  const axiosSecure = useAxiosSecure();
   const { user } = useAuth();
+  const params = useParams();
+  const [data, setData] = useState();
+  const [loading, setLoading] = useState(true);
+  const navigate = useNavigate();
   const [type, setType] = useState("Income");
-  // const [category, setCategory] = useState("");
-  const defaultDate = data.date.includes("T")
-    ? `${data.date.split("T")[0]} ${data.date.split("T")[1].split(".")[0]}`
+
+  useEffect(() => {
+    axiosSecure
+      .get(`transactions/${params.id}`)
+      .then((r) => {
+        setData(r.data.result);
+        setLoading(false);
+      })
+      .catch((e) => toast.error(e.message));
+  }, []);
+  if (loading) {
+    return <Spinner></Spinner>;
+  }
+
+  const defaultDate = data?.date.includes("T")
+    ? `${data?.date.split("T")[0]} ${data?.date.split("T")[1].split(".")[0]}`
     : data.date;
   const incomeCategories = [
     "Salary",
@@ -50,10 +65,9 @@ const UpdateTransaction = () => {
       name: user?.displayName,
     };
 
-    axiosInstance.put(`/transactions/${data._id}`, updateData).then(() => {
+    axiosSecure.put(`/transactions/${data._id}`, updateData).then(() => {
       form.reset();
       navigate(`/transaction/${data._id}`);
-      // setCategory("");
       toast.success("Update Successful");
     });
   };
