@@ -1,21 +1,30 @@
 import React, { useEffect, useState } from "react";
-import { Link, useLoaderData } from "react-router";
+import { Link, useParams } from "react-router";
 import useAxios from "../Hooks/useAxios";
-
+import useAxiosSecure from "../Hooks/useAxiosSecure";
+import { toast } from "react-toastify";
 const TransactionDetail = () => {
-  const data = useLoaderData();
-  const result = data.result;
+  const [data, setData] = useState();
+  const params = useParams();
   const axiosInstance = useAxios();
-  const date = result.date.includes("T")
-    ? `${result.date.split("T")[0]} ${result.date.split("T")[1].split(".")[0]}`
-    : `${result.date.split(" ")[0]} ${result.date.split(" ")[1]}`;
+  const axiosSecure = useAxiosSecure();
+  useEffect(()=>{
+    axiosSecure.get(`transactions/${params.id}`)
+    .then(r => setData(r.data.result))
+    .catch((e) => toast.error(e.message))
+  }, [])
+  const date = data?.date.includes("T")
+    ? `${data?.date.split("T")[0]} ${data?.date.split("T")[1].split(".")[0]}`
+    : `${data?.date.split(" ")[0]} ${data?.date.split(" ")[1]}`;
   const [totalAmount, setTotalAmount] = useState(0);
   // total amount in single category
   useEffect(() => {
     axiosInstance
-      .get(`/category-total-amount?category=${result.category}`)
-      .then((r) => setTotalAmount(r.data[0].total));
-  }, [result.category]);
+      .get(`/category-total-amount?category=${data?.category}`)
+      .then((r) => {
+        setTotalAmount(r.data[0].total)
+      });
+  }, [data?.category]);
 
   return (
     <div className="min-h-screen  py-6">
@@ -29,21 +38,21 @@ const TransactionDetail = () => {
             <h3 className="text-primary font-bold">Type: </h3>
             <span
               className={`font-bold ${
-                result.type === "Income" ? "text-green-600" : "text-red-600"
+                data?.type === "Income" ? "text-green-600" : "text-red-600"
               }`}
             >
-              {result.type}
+              {data?.type}
             </span>
           </div>
           {/* description */}
           <div className="text-gray-700">
             <h3 className="text-primary font-bold">Description: </h3>
-            <span>{result.description}</span>
+            <span>{data?.description}</span>
           </div>
           {/* Amount */}
           <div>
             <h3 className="text-primary font-bold ">Amount: </h3>
-            <span className="text-secondary">{result.amount}৳</span>
+            <span className="text-secondary">{data?.amount}৳</span>
           </div>
           {/* date */}
           <div className="text-gray-700">
@@ -52,7 +61,7 @@ const TransactionDetail = () => {
           </div>
           <div className="text-gray-700">
             <h3 className="text-primary font-bold ">Category: </h3>
-            <span>{result.category}</span>
+            <span>{data?.category}</span>
           </div>
           <div className="text-gray-700">
             <h3 className="text-primary font-bold ">
@@ -69,7 +78,7 @@ const TransactionDetail = () => {
             </Link>
             <Link
               className="btn btn-accent w-full md:w-5/12"
-              to={`/update-transaction/${result._id}`}
+              to={`/update-transaction/${data?._id}`}
             >
               Update
             </Link>

@@ -6,6 +6,7 @@ import { toast } from "react-toastify";
 
 const UpdateTransaction = () => {
   const data = useLoaderData().result;
+  console.log(data);
   const navigate = useNavigate();
   const axiosInstance = useAxios();
   const { user } = useAuth();
