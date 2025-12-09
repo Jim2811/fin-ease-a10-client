@@ -15,8 +15,8 @@ const TransactionDetail = () => {
       .catch((e) => toast.error(e.message));
   }, [user?.email]);
   const date = data?.date.includes("T")
-    ? `${data?.date.split("T")[0]} ${data?.date.split("T")[1].split(".")[0]}`
-    : `${data?.date.split(" ")[0]} ${data?.date.split(" ")[1]}`;
+    ? `${data?.date.split("T")[0]}`
+    : `${data?.date.split(" ")[0]}`;
   const [totalAmount, setTotalAmount] = useState(0);
   // total amount in single category
   useEffect(() => {

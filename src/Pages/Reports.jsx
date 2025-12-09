@@ -1,11 +1,74 @@
-import React from 'react';
-
+import React, { useEffect, useState } from "react";
+import CategoryReport from "../Components/Report/CategoryReport";
+import useAxiosSecure from "../Hooks/useAxiosSecure";
+import useAuth from "../Hooks/useAuth";
+import { toast } from "react-toastify";
+import MonthlyReport from "../Components/Report/MonthlyReport";
 const Reports = () => {
-    return (
-        <div>
-            
+  const { user } = useAuth();
+  const axiosSecure = useAxiosSecure();
+  const [incomeData, setIncomeData] = useState([]);
+  const [expenseData, setExpenseData] = useState([]);
+  useEffect(() => {
+    if (!user?.email) return;
+
+    axiosSecure
+      .get(`/transactions?email=${user.email}`)
+      .then((r) => {
+        const income = {};
+        const expense = {};
+
+        r.data.forEach((item) => {
+          const category = item.category;
+          const amount = Number(item.amount);
+
+          if (item.type === "Income") {
+            income[category] = (income[category] || 0) + amount;
+          } else {
+            expense[category] = (expense[category] || 0) + amount;
+          }
+        });
+
+        const incomeList = Object.keys(income).map((cat) => ({
+          name: cat,
+          value: income[cat],
+        }));
+
+        const expenseList = Object.keys(expense).map((cat) => ({
+          name: cat,
+          value: expense[cat],
+        }));
+        setIncomeData(incomeList);
+        setExpenseData(expenseList)
+      })
+      .catch((err) => {
+        toast.error(err.message);
+        console.log(err.message);
+      });
+  }, [user, axiosSecure]);
+  return (
+    <>
+      <div className="min-h-screen py-10 px-4">
+        <div className="text-center mb-10">
+          <h1 className="text-3xl md:text-6xl font-bold text-primary">
+            Financial Reports
+          </h1>
+          <p className="text-base-content/70 mt-3 text-lg">
+            Visualize your income, expenses, and savings
+          </p>
         </div>
-    );
+
+        <div className="max-w-7xl mx-auto space-y-12">
+          <CategoryReport
+            income={incomeData}
+            expense={expenseData}
+          ></CategoryReport>
+
+          <MonthlyReport></MonthlyReport>
+        </div>
+      </div>
+    </>
+  );
 };
 
 export default Reports;

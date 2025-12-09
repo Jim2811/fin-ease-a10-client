@@ -4,20 +4,26 @@ import MyTransactionCard from "../Components/Cards/MyTransactionCard";
 // import useAxios from "../Hooks/useAxios";
 import useAxiosSecure from "../Hooks/useAxiosSecure";
 import useAuth from "../Hooks/useAuth";
+import Spinner from "../Components/Spinner";
 
 const MyTransactions = () => {
   const {user} = useAuth()
   const axiosSecure = useAxiosSecure()
-  const [transactions, setTransactions] = useState();
+  const [transactions, setTransactions] = useState([]);
+  const [loading, setLoading] = useState(true)
   useEffect(()=>{
     axiosSecure.get(`/transactions?email=${user.email}`)
     .then(res =>{
       setTransactions(res.data)
+      setLoading(false)
     })
-  }, [])
+  }, [user?.email, axiosSecure])
   const handleDltSuccess = (id) =>{
     const remaining = transactions.filter((t) => t._id !== id);
     setTransactions(remaining);
+  }
+  if(loading){
+    return <Spinner></Spinner>
   }
   return (
     <>
@@ -28,7 +34,7 @@ const MyTransactions = () => {
           </h1>
         </div>
 
-        {Array.isArray(transactions) ? (
+        {transactions.length > 0 ? (
           <div className="grid md:grid-cols-3 gap-4 max-w-6xl px-2 mx-auto w-full">
             {transactions.map((myTransaction) => (
               <MyTransactionCard

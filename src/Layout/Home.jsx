@@ -1,6 +1,7 @@
 import React from "react";
 import OverviewCards from "../Components/OverviewCards";
 import TipsWhySection from "../Components/TipsWhySection";
+import Balance from "../Components/Report/Balance";
 
 const Home = () => {
   return (
@@ -26,7 +27,7 @@ const Home = () => {
         </section>
         {/* Overview Cards */}
         <section className="py-20 px-6 bg-base-200/50">
-          <OverviewCards></OverviewCards>
+        <Balance></Balance>
         </section>
 
         {/* Tips & Why Section */}

@@ -4,7 +4,7 @@ const OverviewCards = () => {
     return (
         <div>
             <div className="max-w-7xl mx-auto justify-center grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div className="card bg-base-100 shadow-xl hover:shadow-2xl transition">
+            <div className="card bg-base-100 ">
               <div className="card-body text-center">
                 <div className="text-5xl">৳</div>
                 <h2 className="text-3xl font-bold text-primary">85,400</h2>

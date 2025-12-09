@@ -52,7 +52,7 @@ const UpdateTransaction = () => {
     const form = e.target;
     const type = form.type.value;
     const category = form.category.value;
-    // const date = form.date.value;
+    const date = form.date.value;
     const amount = parseInt(form.amount.value);
     const description = form.description.value;
     const updateData = {
@@ -60,7 +60,7 @@ const UpdateTransaction = () => {
       category,
       amount,
       description,
-      //   date,
+        date,
       email: user?.email,
       name: user?.displayName,
     };
@@ -142,7 +142,7 @@ const UpdateTransaction = () => {
               <span className="label-text font-semibold">Date</span>
             </label>
             <input
-              type="text"
+              type="date"
               name="date"
               className="input input-bordered w-full"
               defaultValue={defaultDate}
