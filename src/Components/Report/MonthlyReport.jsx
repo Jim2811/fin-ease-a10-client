@@ -44,7 +44,7 @@ const MonthlyReport = () => {
                   layout="vertical"
                 >
                   <CartesianGrid strokeDasharray="0 0"></CartesianGrid>
-                  <XAxis type="number" hide ></XAxis>
+                  <XAxis type="number" hide></XAxis>
                   <YAxis
                     dataKey="month"
                     type="category"
@@ -53,6 +53,17 @@ const MonthlyReport = () => {
                   ></YAxis>
                   <Tooltip
                     formatter={(value) => `৳${value.toLocaleString()}`}
+                    contentStyle={{
+                      backgroundColor: "#1f2937",
+                      border: "none",
+                      borderRadius: "8px",
+                    }}
+                    itemStyle={{
+                      color: "#facc15", 
+                    }}
+                    labelStyle={{
+                      color: "#ffffff", 
+                    }}
                   ></Tooltip>
                   <Legend></Legend>
                   <Bar dataKey="income" fill="#10b981" name="Income"></Bar>

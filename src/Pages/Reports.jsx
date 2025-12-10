@@ -4,11 +4,13 @@ import useAxiosSecure from "../Hooks/useAxiosSecure";
 import useAuth from "../Hooks/useAuth";
 import { toast } from "react-toastify";
 import MonthlyReport from "../Components/Report/MonthlyReport";
+import Spinner from "../Components/Spinner";
 const Reports = () => {
   const { user } = useAuth();
   const axiosSecure = useAxiosSecure();
   const [incomeData, setIncomeData] = useState([]);
   const [expenseData, setExpenseData] = useState([]);
+  const [loading, setLoading] = useState(true);
   useEffect(() => {
     if (!user?.email) return;
 
@@ -39,34 +41,40 @@ const Reports = () => {
           value: expense[cat],
         }));
         setIncomeData(incomeList);
-        setExpenseData(expenseList)
+        setExpenseData(expenseList);
+        setLoading(false);
       })
       .catch((err) => {
         toast.error(err.message);
-        console.log(err.message);
       });
   }, [user, axiosSecure]);
   return (
     <>
-      <div className="min-h-screen py-10 px-4">
-        <div className="text-center mb-10">
-          <h1 className="text-3xl md:text-6xl font-bold text-primary">
-            Financial Reports
-          </h1>
-          <p className="text-base-content/70 mt-3 text-lg">
-            Visualize your income, expenses, and savings
-          </p>
+      {loading ? (
+        <div className="min-h-screen">
+          <Spinner></Spinner>
         </div>
+      ) : (
+        <div className="min-h-screen py-10 px-4">
+          <div className="text-center mb-10">
+            <h1 className="text-3xl md:text-6xl font-bold text-primary">
+              Financial Reports
+            </h1>
+            <p className="text-base-content/70 mt-3 text-lg">
+              Visualize your income, expenses, and savings
+            </p>
+          </div>
 
-        <div className="max-w-7xl mx-auto space-y-12">
-          <CategoryReport
-            income={incomeData}
-            expense={expenseData}
-          ></CategoryReport>
+          <div className="max-w-7xl mx-auto space-y-12">
+            <CategoryReport
+              income={incomeData}
+              expense={expenseData}
+            ></CategoryReport>
 
-          <MonthlyReport></MonthlyReport>
+            <MonthlyReport></MonthlyReport>
+          </div>
         </div>
-      </div>
+      )}
     </>
   );
 };

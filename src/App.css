@@ -1,9 +1,10 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap");
 @import "tailwindcss";
- @plugin "daisyui" {
-   themes: light --default;
- }
-    @plugin "daisyui/theme" {
+@plugin "daisyui" {
+  themes: light --default, dark --prefersdark;
+}
+@custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));
+@plugin "daisyui/theme" {
   name: "light";
   default: true;
   --color-primary: #ff6f00;
@@ -11,10 +12,18 @@
   --color-primary-content: #ffffff;
   --color-accent-content: #fff;
 }
-*{
+@plugin "daisyui/theme" {
+  name: "dark";
+  default: true;
+  --color-primary: #ff6f00;
+  --color-accent: #10b981;
+  --color-primary-content: #ffffff;
+  --color-accent-content: #fff;
+}
+* {
   font-family: "Inter", sans-serif;
 }
-.active{
+.active {
   color: #ff6f00;
   font-weight: bold;
   border-bottom: 1px solid #ff6f00;

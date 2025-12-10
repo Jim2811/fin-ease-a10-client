@@ -1,16 +1,29 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link, NavLink, useNavigate } from "react-router";
 import useAuth from "../Hooks/useAuth";
 import ProfilePic from "../assets/default-profile.png";
 import { toast } from "react-toastify";
 const LogoutAndProfile = () => {
   const { user, logout } = useAuth();
+  const [theme, setTheme] = useState(localStorage.getItem("theme") || "light");
   const navigate = useNavigate();
+  
+  useEffect(() => {
+    const html = document.querySelector("html");
+    html.setAttribute("data-theme", theme);
+    localStorage.setItem("theme", theme);
+  }, [theme]);
+
+
+  const handleTheme = (checked) => {
+    setTheme(checked ? "dark" : "light");
+  };
+
   const handleLogout = () => {
     logout()
       .then(() => {
-        navigate("/")
-        toast.success("Logged Out Successfully!")
+        navigate("/");
+        toast.success("Logged Out Successfully!");
       })
       .catch((err) => toast.error(err.message));
   };
@@ -34,13 +47,24 @@ const LogoutAndProfile = () => {
                 <span>{user.displayName}</span>
               </p>
               <p>
-                <span className="font-bold">Email: </span> <span>{user.email}</span>
+                <span className="font-bold">Email: </span>{" "}
+                <span>{user.email}</span>
               </p>
             </div>
-            
+
+            {/* Theme */}
+            <div className="pl-2 py-2">
+              <p className="font-bold">Change Theme</p>
+              <input
+                onChange={(e) => handleTheme(e.target.checked)}
+                type="checkbox"
+                defaultChecked={localStorage.getItem("theme") === "dark"}
+                className="toggle"
+              />
+            </div>
             <Link
               className="btn btn-primary mt-3 w-full hover:bg-white hover:border-red-600 hover:text-black"
-              to={'/my-profile'}
+              to={"/my-profile"}
             >
               My Profile
             </Link>

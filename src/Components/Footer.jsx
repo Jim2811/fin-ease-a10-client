@@ -13,7 +13,7 @@ const Footer = () => {
         <div className="flex justify-center">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
             <div>
-              <div className="flex items-center gap-3">
+              <div className="items-center gap-3">
                 <Link to={"/"}>
                   <img src={Logo} alt="Logo" className="w-15" />
                 </Link>
@@ -27,13 +27,10 @@ const Footer = () => {
                   </p>
                 </div>
               </div>
-              <p className="mt-4 text-sm opacity-80">
-                © {new Date().getFullYear()} FinEase. All rights reserved.
-              </p>
             </div>
 
             <div>
-              <h3 className="font-semibold mb-3 text-lg">Contact & Legal</h3>
+              <h3 className="font-bold mb-3 text-primary text-lg">Contact & Legal</h3>
               <ul className="space-y-2 text-sm">
                 <li>
                   Phone:{" "}
@@ -64,7 +61,7 @@ const Footer = () => {
             </div>
 
             <div>
-              <h3 className="font-semibold mb-3 text-lg">Follow Us</h3>
+              <h3 className="font-bold mb-3 text-lg text-primary">Follow Us</h3>
               <p className="text-sm opacity-80 mb-4">Stay connected with us</p>
               <div className="flex gap-4">
                 <a
@@ -90,6 +87,9 @@ const Footer = () => {
 
         <div className="mt-10 pt-6 text-center text-sm opacity-70">
           Made by Md. Rukhsat Hossain Jim
+          <p className=" text-sm opacity-80">
+            © {new Date().getFullYear()} FinEase. All rights reserved.
+          </p>
         </div>
       </div>
     </footer>
