@@ -2,6 +2,7 @@ import React from "react";
 import { Link, useNavigate } from "react-router";
 import useAuth from "../Hooks/useAuth";
 import GoogleSignIn from "../Components/Button/GoogleSignIn";
+import { toast } from "react-toastify";
 const Login = () => {
   const {signInUser} = useAuth()
   const navigate = useNavigate()
@@ -13,8 +14,9 @@ const Login = () => {
     signInUser(mail, pass)
     .then(() => {
       navigate('/')
+      toast.success("Login Successful")
     })
-    .catch(err => console.log(err))
+    .catch(err => toast.error(err.message))
   };
   return (
     <>
@@ -30,7 +32,6 @@ const Login = () => {
               className="input"
               placeholder="Email"
               name="email"
-              //   onChange={(e) => setEmail(e.target.value)}
               required
             />
 
@@ -51,18 +52,6 @@ const Login = () => {
             <button className="btn btn-accent mt-4" type="submit">
               Login
             </button>
-            {/* <div className="py-2 text-center">
-              {error && (
-                <p className="text-error font-semibold text-center mt-3">
-                  {error}
-                </p>
-              )}
-              {success && (
-                <p className="text-success font-semibold text-center mt-3">
-                  {success}
-                </p>
-              )}
-            </div> */}
             <Link to={"/register"} className="py-2">
               Do not have an Account?{" "}
               <span className="font-bold text-primary">Register</span>

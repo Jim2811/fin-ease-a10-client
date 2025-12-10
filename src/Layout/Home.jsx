@@ -26,8 +26,9 @@ const Home = () => {
           </div>
         </section>
         {/* Overview Cards */}
-        <section className="py-20 px-6 bg-base-200/50">
-        <Balance></Balance>
+        <section className="py-10 px-6 bg-base-200/50">
+        <h2 className="text-3xl text-center pb-5 md:text-5xl font-bold leading-tight text-primary">Overview</h2>
+          <Balance></Balance>
         </section>
 
         {/* Tips & Why Section */}

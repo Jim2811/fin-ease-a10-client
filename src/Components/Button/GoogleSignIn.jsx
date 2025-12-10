@@ -2,16 +2,17 @@ import React from "react";
 import useAuth from "../../Hooks/useAuth";
 import { useNavigate } from "react-router";
 import google from "../../assets/Google.svg";
+import { toast } from "react-toastify";
 const GoogleSignIn = () => {
   const { googleSignIn } = useAuth();
   const navigate = useNavigate();
   const handleGoogleSignIn = () => {
     googleSignIn()
       .then(() => {
-        alert("Authentication Successful");
+        toast.success("Authentication Successful");
         navigate("/");
       })
-      .catch((err) => console.log(err.message));
+      .catch((err) => toast.error(err.message));
   };
   return (
     <div>

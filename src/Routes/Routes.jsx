@@ -13,6 +13,7 @@ import TransactionDetail from "../Pages/TransactionDetail";
 import UpdateTransaction from "../Pages/UpdateTransaction";
 import MyProfile from "../Pages/MyProfile";
 import UpdateProfile from "../Pages/UpdateProfile";
+import ErrorPage from "../Pages/ErrorPage";
 
 const router = createBrowserRouter([
   {
@@ -63,5 +64,9 @@ const router = createBrowserRouter([
       },
     ],
   },
+  {
+    path: "*",
+    Component: ErrorPage
+  }
 ]);
 export default router;

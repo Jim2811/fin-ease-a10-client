@@ -2,13 +2,17 @@ import React from "react";
 import { Link, NavLink, useNavigate } from "react-router";
 import useAuth from "../Hooks/useAuth";
 import ProfilePic from "../assets/default-profile.png";
+import { toast } from "react-toastify";
 const LogoutAndProfile = () => {
   const { user, logout } = useAuth();
   const navigate = useNavigate();
   const handleLogout = () => {
     logout()
-      .then(() => navigate("/"))
-      .catch((err) => console.log(err.message));
+      .then(() => {
+        navigate("/")
+        toast.success("Logged Out Successfully!")
+      })
+      .catch((err) => toast.error(err.message));
   };
   return (
     <>

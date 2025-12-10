@@ -1,36 +1,52 @@
-import React, { useState } from "react";
+import React from "react";
 import { Link, useNavigate } from "react-router";
 import useAuth from "../Hooks/useAuth";
 import { updateProfile } from "firebase/auth";
 import GoogleSignIn from "../Components/Button/GoogleSignIn";
+import { toast } from "react-toastify";
 const Register = () => {
-  const {createUser} = useAuth()
-  const navigate = useNavigate()
-  const [success, setSuccess] = useState(null)
-  const [error, setError] = useState(null)
-  const handleSubmit = (e) =>{
+  const { createUser } = useAuth();
+  const navigate = useNavigate();
+  const handleSubmit = (e) => {
     e.preventDefault();
     const form = e.target;
     const name = form.name.value;
     const mail = form.email.value;
     const photo = form.photoURL.value;
     const pass = form.pass.value;
+    const upperCasePattern = /(?=.*[A-Z])/;
+    const lowerCasePattern = /(?=.*[a-z])/;
+    const lengthPattern = /.{6,}/;
+    if (!lengthPattern.test(pass)) {
+      toast.error("Password Should be longer than 6 Characters");
+      return;
+    } else if (!upperCasePattern.test(pass)) {
+      toast.error(
+        "Password Should contain minimum 1 UpperCase Character. eg. A B C D"
+      );
+      return;
+    } else if (!lowerCasePattern.test(pass)) {
+      toast.error(
+        "Password Should contain minimum 1 LowerCase Character. eg. a b c"
+      );
+      return;
+    }
     createUser(mail, pass)
-    .then(r => {
-      navigate('/')
-      return updateProfile(r.user, {
-        displayName: name,
-        photoURL: photo
-      }).then(()=> {
-        setSuccess("Registration successful! Welcome to FinEase.");
-        form.reset();
-        return r.user
+      .then((r) => {
+        return updateProfile(r.user, {
+          displayName: name,
+          photoURL: photo,
+        }).then(() => {
+          form.reset();
+            toast.success("Registration successful! Welcome to FinEase.");
+            navigate("/");
+          return r.user;
+        });
       })
-    })
-    .catch((err) => {
-      setError(err.message)
-    })
-  }
+      .catch((err) => {
+        toast.error(err.message);
+      });
+  };
   return (
     <>
       <title>Register - FinEase</title>
