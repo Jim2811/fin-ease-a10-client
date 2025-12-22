@@ -13,16 +13,17 @@ const MyTransactions = () => {
   const [transactions, setTransactions] = useState([]);
   const [loading, setLoading] = useState(true);
   useEffect(() => {
+    if(!user?.email){
+      return
+    }
     axiosSecure
       .get(`/transactions?email=${user.email}`)
       .then((res) => {
         setTransactions(res.data);
         setLoading(false);
       })
-      .catch(() =>
-        toast.error(
-          "Some error occurred please reload the page or try again letter"
-        )
+      .catch((err) =>
+        toast.error(err.message)
       );
   }, [user?.email, axiosSecure]);
   const handleDltSuccess = (id) => {
@@ -42,7 +43,7 @@ const MyTransactions = () => {
           <Spinner></Spinner>
         </div>
       ) : (
-        <div className="min-h-screen">
+        <div className="min-h-screen pb-11">
           <div className="py-8">
             <h1 className="my-5 text-center text-4xl md:text-5xl text-primary font-bold">
               My Transactions

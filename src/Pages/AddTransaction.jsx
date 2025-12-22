@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 import useAuth from "../Hooks/useAuth";
-import useAxios from "../Hooks/useAxios";
 import { toast } from "react-toastify";
+import useAxiosSecure from "../../../../../Assignment-11/Ticket Bari/ticket-bari-client/src/Hooks/useAxiosSecure";
 const AddTransaction = () => {
   const { user } = useAuth();
 
-  const axiosInstance = useAxios();
+  const axiosInstance = useAxiosSecure();
   const [type, setType] = useState("Income");
   const [category, setCategory] = useState("");
 
@@ -58,13 +58,13 @@ const AddTransaction = () => {
   };
 
   return (
-    <div className="mx-auto p-6 bg-gradient-to-br from-primary/10 via-base-100 to-secondary/10">
+    <div className="mx-auto pb-12">
       <h1 className="text-primary text-center font-extrabold text-3xl md:text-5xl my-5">
         Add Transaction
       </h1>
       <form
         onSubmit={handleAddTransaction}
-        className="card w-11/12 md:w-7/12 mx-auto bg-base-100 shadow-2xl p-6 rounded-2xl mt-7"
+        className="card w-11/12 md:w-7/12 mx-auto p-6 bg-gradient-to-br from-primary/10 via-base-100 to-secondary/10 shadow-2xl p-6 rounded-2xl mt-7"
       >
         {/* Type */}
         <div className="form-control mb-4">
@@ -150,7 +150,7 @@ const AddTransaction = () => {
             type="date"
             name="date"
             required
-            className="input input-bordered w-full bg-gray-100"
+            className="input input-bordered w-full bg-base-100"
           />
         </div>
         {/* User Email */}
@@ -162,7 +162,7 @@ const AddTransaction = () => {
             type="email"
             value={user?.email || ""}
             readOnly
-            className="input input-bordered w-full bg-gray-100"
+            className="input input-bordered w-full bg-base-100"
           />
         </div>
 
@@ -175,7 +175,7 @@ const AddTransaction = () => {
             type="text"
             value={user?.displayName || ""}
             readOnly
-            className="input input-bordered w-full bg-gray-100"
+            className="input input-bordered w-full bg-base-100"
           />
         </div>
 

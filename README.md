@@ -1,16 +1,37 @@
-# React + Vite
+# FinEase
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Project Name
+**FinEase** – Personal Income & Expense Tracker
 
-Currently, two official plugins are available:
+## Live URL
+fin-ease-b12-a10.netlify.app
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Purpose
+FinEase allows users to track their personal income and expenses in one place. Users can add, update, and delete transactions, categorize them, and monitor their financial health over time.  
 
-## React Compiler
+## Key Features
+- User authentication and protected routes using **Firebase Auth**.
+- Add income and expense entries with category and amount.
+- View a list of all transactions in a clear and organized manner.
+- Filter transactions by date, type (income/expense), or category.
+- Responsive and user-friendly interface with real-time updates.
+- Dashboard displays total income, total expenses, and balance dynamically.
+- Secure client-server communication for data safety.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Tech Stack
+- **Frontend:** React, TailwindCSS, DaisyUI
+- **Backend:** Firebase (Firestore)
+- **Authentication:** Firebase Auth
+- **State Management & Data Fetching:** React Hooks
 
-## Expanding the ESLint configuration
+## NPM Packages Used
+- `react` – Frontend library
+- `firebase` – Authentication and database
+- `daisyui` – UI components
+- `tailwindcss` – Styling
+- `react-router-dom` – Routing
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## Project Setup
+1. Clone the repository:
+```bash
+git clone <your-repo-url>

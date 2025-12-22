@@ -55,9 +55,9 @@ const Reports = () => {
           <Spinner></Spinner>
         </div>
       ) : (
-        <div className="min-h-screen py-10 px-4">
+        <div className="min-h-screen py-11 px-4">
           <div className="text-center mb-10">
-            <h1 className="text-3xl md:text-6xl font-bold text-primary">
+            <h1 className="text-3xl md:text-5xl font-bold text-primary">
               Financial Reports
             </h1>
             <p className="text-base-content/70 mt-3 text-lg">

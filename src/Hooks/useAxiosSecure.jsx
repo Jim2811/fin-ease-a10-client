@@ -8,7 +8,7 @@ const instance = axios.create({
 const useAxiosSecure = () => {
     const {user} = useAuth()
     instance.interceptors.request.use((config)=>{
-        config.headers.authorization = `Bearer ${user.accessToken}` 
+        config.headers.authorization = `Bearer ${user?.accessToken}` 
         return config
     })
   return instance
