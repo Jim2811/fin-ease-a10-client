@@ -1,11 +1,12 @@
 import React, { useState } from "react";
 import useAuth from "../Hooks/useAuth";
 import { toast } from "react-toastify";
-import useAxiosSecure from "../../../../../Assignment-11/Ticket Bari/ticket-bari-client/src/Hooks/useAxiosSecure";
+import useAxiosSecure from "../Hooks/useAxiosSecure";
+
 const AddTransaction = () => {
   const { user } = useAuth();
 
-  const axiosInstance = useAxiosSecure();
+  const axiosInstance = useAxiosSecure()
   const [type, setType] = useState("Income");
   const [category, setCategory] = useState("");
 

@@ -1,9 +1,9 @@
 import axios from "axios";
 import React from "react";
-import useAuth from "./useAuth";
+import useAuth from "../Hooks/useAuth";
 
 const instance = axios.create({
-  baseURL: "http://localhost:3000",
+  baseURL: "https://fin-ease-server-iota.vercel.app",
 });
 const useAxiosSecure = () => {
     const {user} = useAuth()

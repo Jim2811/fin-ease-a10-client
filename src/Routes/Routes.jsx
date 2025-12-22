@@ -47,7 +47,7 @@ const router = createBrowserRouter([
           },
           {
             path: "/update-transaction/:id",
-            loader: ({params}) => fetch(`http://localhost:3000/transactions/${params.id}`),
+            loader: ({params}) => fetch(`https://fin-ease-server-iota.vercel.app/transactions/${params.id}`),
             Component: UpdateTransaction
           },
           {

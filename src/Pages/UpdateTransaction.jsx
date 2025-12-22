@@ -20,6 +20,7 @@ const UpdateTransaction = () => {
       .then((r) => {
         setData(r.data.result);
         setLoading(false);
+        console.log(r);
       })
       .catch((e) => toast.error(e.message));
   }, []);
