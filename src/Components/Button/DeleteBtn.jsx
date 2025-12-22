@@ -1,9 +1,9 @@
 import React from "react";
 import Swal from "sweetalert2";
-import useAxios from "../../Hooks/useAxios";
+import useAxiosSecure from "../../Hooks/useAxiosSecure";
 
 const DeleteBtn = ({ myTransaction, handleDltSuccess }) => {
-  const axiosInstance = useAxios();
+  const axiosSecure = useAxiosSecure();
   const handleDlt = () => {
     Swal.fire({
       title: "Are you sure?",
@@ -13,17 +13,15 @@ const DeleteBtn = ({ myTransaction, handleDltSuccess }) => {
       confirmButtonColor: "#3085d6",
       cancelButtonColor: "#d33",
       confirmButtonText: "Yes, delete it!",
-    }).then((result) => {
-      if (result.isConfirmed) {
-        axiosInstance.delete(`/transactions/${myTransaction._id}`).then(() => {
-                Swal.fire({
-                  title: "Deleted!",
-                  text: "Your transaction data has been deleted.",
-                  icon: "success",
-                });
-                handleDltSuccess(myTransaction._id);
+    }).then(() => {
+      axiosSecure.delete(`/transactions/${myTransaction._id}`).then(() => {
+        Swal.fire({
+          title: "Deleted!",
+          text: "Your transaction data has been deleted.",
+          icon: "success",
         });
-      }
+        handleDltSuccess(myTransaction._id);
+      });
     });
   };
   return (
