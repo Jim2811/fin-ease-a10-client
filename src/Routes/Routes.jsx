@@ -14,7 +14,7 @@ import UpdateTransaction from "../Pages/UpdateTransaction";
 import MyProfile from "../Pages/MyProfile";
 import UpdateProfile from "../Pages/UpdateProfile";
 import ErrorPage from "../Pages/ErrorPage";
-
+import Contact from "../Pages/Contact"
 const router = createBrowserRouter([
   {
     path: "/",
@@ -25,24 +25,28 @@ const router = createBrowserRouter([
         Component: Home,
       },
       {
-        path: "/login",
+        path: "login",
         Component: Login,
       },
       {
-        path: "/register",
+        path: "register",
         Component: Register,
+      },
+      {
+        path: "contact",
+        Component: Contact
       },
       {
         Component: PrivateRoute,
         children: [
-          { path: "/add-transaction", 
+          { path: "add-transaction", 
             Component: AddTransaction },
           {
-            path: "/my-transactions",
+            path: "my-transactions",
             Component: MyTransactions,
           },
           {
-            path: "/transaction/:id",
+            path: "transaction/:id",
             Component: TransactionDetail,
           },
           {
@@ -51,14 +55,14 @@ const router = createBrowserRouter([
             Component: UpdateTransaction
           },
           {
-            path: '/my-profile',
+            path: 'my-profile',
             Component: MyProfile
           },
           {
-            path: '/update-profile',
+            path: 'update-profile',
             Component: UpdateProfile
           },
-          { path: "/reports", 
+          { path: "reports", 
             Component: Reports },
         ],
       },

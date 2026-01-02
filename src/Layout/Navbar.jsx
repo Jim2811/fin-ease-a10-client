@@ -4,6 +4,7 @@ import { Link, NavLink } from "react-router";
 import useAuth from "../Hooks/useAuth";
 import LogoutAndProfile from "../Components/LogoutAndProfile";
 import ThemeToggle from "../Components/Button/ThemeToggle";
+import PrivateNavItem from "../Components/PrivateNavItem/PrivateNavItem";
 const Navbar = () => {
   const { user } = useAuth();
   return (
@@ -42,34 +43,24 @@ const Navbar = () => {
                     <NavLink to={"/"}>Home</NavLink>
                   </li>
                   <li>
-                    <NavLink to="/add-transaction">Add Transaction</NavLink>
+                    <NavLink to={"/contact"}>Contact</NavLink>
                   </li>
-                  <li>
-                    <NavLink to="/my-transactions">My Transactions</NavLink>
-                  </li>
-                  <li>
-                    <NavLink to="/reports">Reports</NavLink>
-                  </li>
+                  {user && <PrivateNavItem></PrivateNavItem>}
                 </ul>
               </div>
               <Link to={"/"}>
-                <img src={Logo} alt="FinEase Logo" className="w-15" />
+                <img src={Logo} alt="FinEase Logo" className="md:w-15 w-10" />
               </Link>
             </div>
             <div className="navbar-center hidden lg:flex">
-              <ul className="menu menu-horizontal px-1 flex gap-0.5">
+              <ul className="menu menu-horizontal flex gap-0.5">
                 <li>
                   <NavLink to={"/"}>Home</NavLink>
                 </li>
                 <li>
-                  <NavLink to="/add-transaction">Add Transaction</NavLink>
+                  <NavLink to={"/contact"}>Contact</NavLink>
                 </li>
-                <li>
-                  <NavLink to="/my-transactions">My Transactions</NavLink>
-                </li>
-                <li>
-                  <NavLink to="/reports">Reports</NavLink>
-                </li>
+                {user && <PrivateNavItem></PrivateNavItem>}
               </ul>
             </div>
             <div className="navbar-end">

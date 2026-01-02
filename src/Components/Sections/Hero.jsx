@@ -1,4 +1,6 @@
 import { motion } from "framer-motion";
+import useAuth from "../../Hooks/useAuth";
+import { Link } from "react-router";
 
 const textVariants = {
   hidden: { opacity: 0, y: 20 },
@@ -8,8 +10,8 @@ const textVariants = {
     transition: { delay, duration: 0.6, ease: [0.25, 0.1, 0.25, 1] },
   }),
 };
-
 const Hero = () => {
+  const {user} = useAuth()
   return (
     <section className="hero min-h-[70vh] custom-gradient overflow-hidden">
       <div className="hero-content text-center">
@@ -48,6 +50,19 @@ const Hero = () => {
             Track expenses, set budgets, and grow your wealth — all in one
             simple, beautiful app.
           </motion.p>
+          <motion.button
+            className={user? "btn btn-primary" : "btn btn-accent"}
+            variants={textVariants}
+            custom={0.4}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: false, amount: 0.5 }}
+          >
+            {
+              user ? <Link to={'/add-transaction'}>Get Started</Link> :
+              <Link to={'/login'}>Get Started</Link>
+            }
+          </motion.button>
         </div>
       </div>
     </section>
