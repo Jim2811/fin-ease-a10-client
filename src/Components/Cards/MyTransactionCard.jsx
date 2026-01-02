@@ -9,7 +9,7 @@ const MyTransactionCard = ({ myTransaction, handleDltSuccess }) => {
     myTransaction.type.slice(1).toLowerCase();
   return (
     <div>
-      <div className="card bg-gradient-to-br from-primary/10 via-base-100 to-secondary/10 hover:shadow-2xl transition w-full mx-auto shadow-lg">
+      <div className="card custom-gradient hover:shadow-2xl transition w-full mx-auto shadow-lg">
         <div className="card-body">
           <h2
             className={`card-title font-bold text-xl ${

@@ -27,7 +27,7 @@ const UpdateProfile = () => {
     <>
       <title>Update Profile - FinEase</title>
       <div className="flex flex-col justify-center items-center py-12 min-h-screen">
-        <div className="py-5 bg-gradient-to-br from-primary/10 via-base-100 to-secondary/10 shadow-2xl rounded-2xl hover:shadow-primary/30 transition duration-300 flex flex-col justify-center">
+        <div className="py-5 custom-gradient shadow-2xl rounded-2xl hover:shadow-primary/30 transition duration-300 flex flex-col justify-center">
           <form className="" onSubmit={handleSubmit}>
             <h1 className="font-bold text-center font-bold text-4xl text-primary py-4">
               Update Profile

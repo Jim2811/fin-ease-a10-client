@@ -11,7 +11,7 @@ const textVariants = {
 
 const Hero = () => {
   return (
-    <section className="hero min-h-[70vh] bg-gradient-to-br from-primary/10 via-base-100 to-secondary/10 overflow-hidden">
+    <section className="hero min-h-[70vh] custom-gradient overflow-hidden">
       <div className="hero-content text-center">
         <div className="max-w-4xl">
           <motion.h1

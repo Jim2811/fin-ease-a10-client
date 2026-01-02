@@ -42,7 +42,7 @@ const TransactionDetail = () => {
             <h1 className="card-title text-primary text-4xl font-bold text-center pb-3 mb-5">
               Transaction Details
             </h1>
-            <div className="w-10/12 md:w-7/12 bg-gradient-to-br from-primary/10 via-base-100 to-secondary/10 py-7 px-5 rounded-2xl shadow-2xl text-xl grid gap-2">
+            <div className="w-10/12 md:w-7/12 custom-gradient py-7 px-5 rounded-2xl shadow-2xl text-xl grid gap-2">
               {/* Transaction Type */}
               <div>
                 <h3 className="text-primary font-bold">Type: </h3>

@@ -22,7 +22,7 @@ const AllSection = () => {
         whileInView="visible"
         viewport={{ once: false, amount: 0.3 }}
       >
-        <h2 className="text-2xl text-center pb-5 md:text-4xl font-bold leading-tight text-primary">
+        <h2 className="text-2xl text-center pb-5 md:text-4xl font-bold leading-tight text-base-20">
           Overview
         </h2>
         <Balance />

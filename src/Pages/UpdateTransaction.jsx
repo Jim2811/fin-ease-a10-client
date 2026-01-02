@@ -74,7 +74,7 @@ const UpdateTransaction = () => {
   };
   return (
     <div className="min-h-screen flex items-center justify-center p-7">
-      <div className="card w-full max-w-md bg-gradient-to-br from-primary/10 via-base-100 to-secondary/10 shadow-2xl rounded-2xl py-3">
+      <div className="card w-full max-w-md custom-gradient shadow-2xl rounded-2xl py-3">
         <form className="card-body space-y-4" onSubmit={handleSubmit}>
           <h2 className="text-3xl text-primary font-bold text-center mb-5">
             Update Transaction

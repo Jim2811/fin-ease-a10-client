@@ -23,7 +23,7 @@ const MonthlyReport = () => {
   }
   return (
     <div>
-      <div className="bg-gradient-to-br from-primary/10 via-base-100 to-secondary/10 rounded-2xl shadow-2xl py-8 px-2">
+      <div className="custom-gradient rounded-2xl shadow-2xl py-8 px-2">
         <h2 className="text-2xl font-bold text-primary text-center mb-6">
           Monthly Overview
         </h2>

@@ -27,7 +27,7 @@ const CategoryReport = ({ income, expense }) => {
   };
   return (
     <div>
-      <div className="bg-gradient-to-br from-primary/10 via-base-100 to-secondary/10 rounded-2xl shadow-2xl py-8 ">
+      <div className="custom-gradient rounded-2xl shadow-2xl py-8 ">
       <h2 className="text-center font-bold mb-3 text-3xl text-primary">Category Overview</h2>
         <div className="grid md:grid-cols-2 grid-cols-1">
           <div>

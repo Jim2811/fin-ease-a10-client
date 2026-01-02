@@ -7,7 +7,7 @@ const MyProfile = () => {
 
   return (
     <div className="min-h-screen flex items-center justify-center p-6">
-      <div className="card w-full max-w-md bg-gradient-to-br from-primary/10 via-base-100 to-secondary/10 shadow-2xl rounded-2xl hover:shadow-primary/30 transition duration-300">
+      <div className="card w-full max-w-md custom-gradient shadow-2xl rounded-2xl hover:shadow-primary/30 transition duration-300">
         <figure className="pt-6">
           <img
             src={user?.photoURL || Profile}

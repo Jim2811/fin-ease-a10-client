@@ -4,11 +4,17 @@
   themes: light --default, dark --prefersdark;
 }
 @custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));
+@layer utilities {
+  .custom-gradient {
+    @apply bg-gradient-to-br from-primary/20 via-base-100 to-primary/35;
+  }
+}
 @plugin "daisyui/theme" {
   name: "light";
   default: true;
   --color-primary: #ff6f00;
   --color-accent: #10b981;
+  --color-secondary: #f56aa6;
   --color-primary-content: #ffffff;
   --color-accent-content: #fff;
 }
@@ -16,6 +22,7 @@
   name: "dark";
   default: true;
   --color-primary: #ff6f00;
+  --color-secondary: #f56aa6;
   --color-accent: #10b981;
   --color-primary-content: #ffffff;
   --color-accent-content: #fff;
@@ -28,4 +35,12 @@
   font-weight: bold;
   border-bottom: 1px solid #ff6f00;
   border-radius: 0;
+}
+
+.cGradient{
+ background: linear-gradient(
+    to bottom right,
+    rgba(255, 111, 0, 0.6),
+    #f56aa6,
+    rgba(16, 185, 129, 0.5))
 }

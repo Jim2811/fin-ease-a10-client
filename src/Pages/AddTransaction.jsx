@@ -65,7 +65,7 @@ const AddTransaction = () => {
       </h1>
       <form
         onSubmit={handleAddTransaction}
-        className="card w-11/12 md:w-7/12 mx-auto p-6 bg-gradient-to-br from-primary/10 via-base-100 to-secondary/10 shadow-2xl p-6 rounded-2xl mt-7"
+        className="card w-11/12 md:w-7/12 mx-auto custom-gradient shadow-2xl p-6 rounded-2xl mt-7"
       >
         {/* Type */}
         <div className="form-control mb-4">

@@ -8,7 +8,7 @@ import Logo from "../assets/Logo.png";
 import { Link } from "react-router";
 const Footer = () => {
   return (
-    <footer className="bg-gradient-to-br from-primary/10 via-base-100 to-secondary/10 text-base-content ">
+    <footer className="custom-gradient text-base-content ">
       <div className="w-full mx-auto px-6 py-10">
         <div className="flex justify-center">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
