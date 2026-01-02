@@ -10,7 +10,7 @@ const Navbar = () => {
     <>
       <nav className="shadow-lg sticky top-0 z-50">
         <div>
-          <div className="navbar bg-base-100 py-2 ">
+          <div className="navbar bg-base-100/30 backdrop-blur-md border-b border-base-200/30 py-2 transition-all duration-300 ">
             <div className="navbar-start">
               <div className="dropdown">
                 <div
