@@ -5,12 +5,10 @@ import useAxiosSecure from "../Hooks/useAxiosSecure";
 
 const AddTransaction = () => {
   const { user } = useAuth();
+  const axiosInstance = useAxiosSecure();
 
-  const axiosInstance = useAxiosSecure()
   const [type, setType] = useState("Income");
   const [category, setCategory] = useState("");
-
-  // const date = new Date().toISOString();
 
   const incomeCategories = [
     "Salary",
@@ -31,12 +29,21 @@ const AddTransaction = () => {
 
   const categories = type === "Income" ? incomeCategories : expenseCategories;
 
-  const handleAddTransaction = (e) => {
+  const handleAddTransaction = async (e) => {
     e.preventDefault();
     const form = e.target;
-    const amount = parseInt(form.amount.value);
-    const description = form.description.value;
+    const amount = parseFloat(form.amount.value);
+    const description = form.description.value.trim();
     const date = form.date.value;
+
+    if (!category) {
+      toast.warning("Please select a category");
+      return;
+    }
+    if (!amount || amount <= 0) {
+      toast.error("Please enter a valid amount");
+      return;
+    }
 
     const newTransaction = {
       type,
@@ -48,31 +55,30 @@ const AddTransaction = () => {
       name: user?.displayName,
     };
 
-    axiosInstance
-      .post("/transactions", newTransaction)
-      .then(() => {
-        form.reset();
-        setCategory("");
-        toast.success("Transaction details added successfully!! 😊");
-      })
-      .catch(() => toast.error("Some Error Ocured!"));
+    try {
+      await axiosInstance.post("/transactions", newTransaction);
+      form.reset();
+      setCategory("");
+      setType("Income");
+      toast.success("Transaction added successfully");
+    } catch {
+      toast.error("Something went wrong");
+    }
   };
 
   return (
-    <div className="mx-auto pb-12">
-      <h1 className="text-primary text-center font-extrabold text-3xl md:text-5xl my-5">
-        Add Transaction
-      </h1>
+    <div className="flex items-center justify-center min-h-[90vh] py-16 px-4 custom-gradient">
       <form
         onSubmit={handleAddTransaction}
-        className="card w-11/12 md:w-7/12 mx-auto custom-gradient shadow-2xl p-6 rounded-2xl mt-7"
+        className="w-full max-w-2xl bg-base-200/50 backdrop-blur-md p-8 rounded-2xl shadow-xl border border-base-300"
       >
-        {/* Type */}
-        <div className="form-control mb-4">
-          <label className="label">
-            <span className="label-text font-semibold">
-              Type <span className="text-red-600">*</span>
-            </span>
+        <h1 className="text-3xl md:text-4xl font-extrabold text-primary text-center mb-8">
+          Add Transaction
+        </h1>
+
+        <div className="mb-5">
+          <label className="block font-semibold mb-1 text-base-content/80">
+            Transaction Type <span className="text-red-500">*</span>
           </label>
           <select
             value={type}
@@ -80,7 +86,7 @@ const AddTransaction = () => {
               setType(e.target.value);
               setCategory("");
             }}
-            className="select select-bordered w-full"
+            className="select select-bordered w-full bg-base-100"
             required
           >
             <option value="Income">Income</option>
@@ -88,104 +94,96 @@ const AddTransaction = () => {
           </select>
         </div>
 
-        {/* Category */}
-        <div className="form-control mb-4">
-          <label className="label">
-            <span className="label-text font-semibold">
-              Category <span className="text-red-600">*</span>
-            </span>
+        <div className="mb-5">
+          <label className="block font-semibold mb-1 text-base-content/80">
+            Category <span className="text-red-500">*</span>
           </label>
           <select
             value={category}
             onChange={(e) => setCategory(e.target.value)}
-            className="select select-bordered w-full"
+            className="select select-bordered w-full bg-base-100"
             required
           >
-            <option value="">Select Category</option>
-            {categories.map((category) => (
-              <option key={category} value={category}>
-                {category}
+            <option value="">Select {type} Category</option>
+            {categories.map((cat) => (
+              <option key={cat} value={cat}>
+                {cat}
               </option>
             ))}
           </select>
         </div>
 
-        {/* Amount */}
-        <div className="form-control mb-4">
-          <label className="label">
-            <span className="label-text font-semibold">
-              Amount <span className="text-red-600">*</span>
-            </span>
+        <div className="mb-5">
+          <label className="block font-semibold mb-1 text-base-content/80">
+            Amount <span className="text-red-500">*</span>
           </label>
           <input
             type="number"
             name="amount"
             placeholder="Enter amount"
-            className="input input-bordered w-full"
+            className="input input-bordered w-full bg-base-100"
+            min="1"
+            step="0.01"
             required
           />
         </div>
 
-        {/* Description */}
-        <div className="form-control mb-4">
-          <label className="label">
-            <span className="label-text font-semibold">
-              Description <span className="text-red-600">*</span>
-            </span>
+        <div className="mb-5">
+          <label className="block font-semibold mb-1 text-base-content/80">
+            Description <span className="text-red-500">*</span>
           </label>
           <textarea
             name="description"
-            className="textarea textarea-bordered w-full h-28 resize-none"
-            placeholder="Write short description"
+            rows="4"
+            className="textarea textarea-bordered w-full bg-base-100 resize-none"
+            placeholder="Write a short description..."
             required
           ></textarea>
         </div>
 
-        {/* date */}
-        <div className="form-control mb-6">
-          <label className="label">
-            <span className="label-text font-semibold">Transaction Date</span>{" "}
-            <span className="text-red-600">*</span>
+        <div className="mb-5">
+          <label className="block font-semibold mb-1 text-base-content/80">
+            Date <span className="text-red-500">*</span>
           </label>
           <input
             type="date"
             name="date"
+            className="input input-bordered w-full bg-base-100"
             required
-            className="input input-bordered w-full bg-base-100"
-          />
-        </div>
-        {/* User Email */}
-        <div className="form-control mb-4">
-          <label className="label">
-            <span className="label-text font-semibold">User Email</span>
-          </label>
-          <input
-            type="email"
-            value={user?.email || ""}
-            readOnly
-            className="input input-bordered w-full bg-base-100"
           />
         </div>
 
-        {/* User Name */}
-        <div className="form-control mb-6">
-          <label className="label">
-            <span className="label-text font-semibold">User Name</span>
-          </label>
-          <input
-            type="text"
-            value={user?.displayName || ""}
-            readOnly
-            className="input input-bordered w-full bg-base-100"
-          />
+        <div className="grid md:grid-cols-2 gap-4 mb-8">
+          <div>
+            <label className="block font-semibold mb-1 text-base-content/80">
+              Your Email
+            </label>
+            <input
+              type="email"
+              value={user?.email || ""}
+              readOnly
+              className="input input-bordered w-full bg-base-100 opacity-80 cursor-not-allowed"
+            />
+          </div>
+          <div>
+            <label className="block font-semibold mb-1 text-base-content/80">
+              Your Name
+            </label>
+            <input
+              type="text"
+              value={user?.displayName || ""}
+              readOnly
+              className="input input-bordered w-full bg-base-100 opacity-80 cursor-not-allowed"
+            />
+          </div>
         </div>
 
-        {/* Submit Button */}
-        <div className="form-control">
-          <button type="submit" className="btn btn-primary w-full">
-            Add Transaction
-          </button>
-        </div>
+        <button
+          type="submit"
+          className="btn btn-primary w-full text-lg font-semibold tracking-wide shadow-lg hover:shadow-primary/30 transition-all duration-300"
+        >
+          Add Transaction
+        </button>
       </form>
     </div>
   );

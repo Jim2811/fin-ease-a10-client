@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router";
+import { useNavigate, useParams } from "react-router-dom";
 import useAuth from "../Hooks/useAuth";
 import { toast } from "react-toastify";
 import useAxiosSecure from "../Hooks/useAxiosSecure";
@@ -9,28 +9,37 @@ const UpdateTransaction = () => {
   const axiosSecure = useAxiosSecure();
   const { user } = useAuth();
   const params = useParams();
-  const [data, setData] = useState();
+  const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
-  const navigate = useNavigate();
   const [type, setType] = useState("Income");
+  const navigate = useNavigate();
 
   useEffect(() => {
     axiosSecure
-      .get(`transactions/${params.id}`)
+      .get(`/transactions/${params.id}`)
       .then((r) => {
         setData(r.data.result);
+        setType(r.data.result.type);
         setLoading(false);
-        console.log(r);
       })
-      .catch((e) => toast.error(e.message));
-  }, []);
+      .catch((e) => {
+        toast.error(e.message || "Failed to load transaction");
+        setLoading(false);
+      });
+  }, [axiosSecure, params.id]);
+
   if (loading) {
-    return <Spinner></Spinner>;
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-base-100">
+        <Spinner />
+      </div>
+    );
   }
 
-  const defaultDate = data?.date.includes("T")
-    ? `${data?.date.split("T")[0]} ${data?.date.split("T")[1].split(".")[0]}`
-    : data.date;
+  const defaultDate = data?.date?.includes("T")
+    ? data.date.split("T")[0]
+    : data?.date || "";
+
   const incomeCategories = [
     "Salary",
     "Bonus",
@@ -47,112 +56,116 @@ const UpdateTransaction = () => {
     "Health",
     "Others",
   ];
+
   const categories = type === "Income" ? incomeCategories : expenseCategories;
-  const handleSubmit = (e) => {
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const form = e.target;
-    const type = form.type.value;
-    const category = form.category.value;
-    const date = form.date.value;
-    const amount = parseInt(form.amount.value);
-    const description = form.description.value;
     const updateData = {
-      type,
-      category,
-      amount,
-      description,
-        date,
+      type: form.type.value,
+      category: form.category.value,
+      amount: parseFloat(form.amount.value),
+      description: form.description.value.trim(),
+      date: form.date.value,
       email: user?.email,
       name: user?.displayName,
     };
 
-    axiosSecure.put(`/transactions/${data._id}`, updateData).then(() => {
-      form.reset();
+    try {
+      await axiosSecure.put(`/transactions/${data._id}`, updateData);
+      toast.success("Transaction updated successfully");
       navigate(`/transaction/${data._id}`);
-      toast.success("Update Successful");
-    });
+    } catch {
+      toast.error("Update failed — please try again");
+    }
   };
-  return (
-    <div className="min-h-screen flex items-center justify-center p-7">
-      <div className="card w-full max-w-md custom-gradient shadow-2xl rounded-2xl py-3">
-        <form className="card-body space-y-4" onSubmit={handleSubmit}>
-          <h2 className="text-3xl text-primary font-bold text-center mb-5">
-            Update Transaction
-          </h2>
 
-          <div className="form-control">
-            <label className="label">
-              <span className="label-text font-semibold">Type</span>
+  return (
+    <div className="min-h-screen flex items-center justify-center px-6 py-12 bg-gradient-to-br from-primary/10 via-base-100 to-secondary/10">
+      <div className="w-full max-w-2xl bg-base-200/60 backdrop-blur-md border border-base-300 rounded-2xl shadow-xl p-8">
+        <h2 className="text-3xl md:text-4xl font-extrabold text-primary text-center mb-10">
+          Update Transaction
+        </h2>
+        <form onSubmit={handleSubmit} className="space-y-6">
+          <div>
+            <label className="block font-semibold mb-2 text-base-content/80">
+              Transaction Type <span className="text-red-500">*</span>
             </label>
             <select
-              className="select select-bordered w-full"
-              onChange={(e) => setType(e.target.value)}
-              defaultValue={data.type}
               name="type"
+              value={type}
+              onChange={(e) => setType(e.target.value)}
+              className="select select-bordered w-full bg-base-100"
+              required
             >
-              <option>Income</option>
-              <option>Expense</option>
+              <option value="Income">Income</option>
+              <option value="Expense">Expense</option>
             </select>
           </div>
-
-          <div className="form-control">
-            <label className="label">
-              <span className="label-text font-semibold">Category</span>
+          <div>
+            <label className="block font-semibold mb-2 text-base-content/80">
+              Category <span className="text-red-500">*</span>
             </label>
             <select
-              // onChange={(e) => setCategory(e.target.value)}
-              defaultValue={data.category}
               name="category"
-              className="select select-bordered w-full"
+              defaultValue={data.category}
+              className="select select-bordered w-full bg-base-100"
+              required
             >
-              {categories.map((category) => (
-                <option key={category} value={category}>
-                  {category}
+              {categories.map((cat) => (
+                <option key={cat} value={cat}>
+                  {cat}
                 </option>
               ))}
             </select>
           </div>
-
-          <div className="form-control">
-            <label className="label">
-              <span className="label-text font-semibold">Amount</span>
+          <div>
+            <label className="block font-semibold mb-2 text-base-content/80">
+              Amount <span className="text-red-500">*</span>
             </label>
             <input
               type="number"
-              placeholder="Enter amount"
               name="amount"
               defaultValue={data.amount}
-              className="input input-bordered w-full"
+              placeholder="Enter amount"
+              className="input input-bordered w-full bg-base-100"
+              min="1"
+              step="0.01"
+              required
             />
           </div>
-
-          <div className="form-control">
-            <label className="label">
-              <span className="label-text font-semibold">Description</span>
+          <div>
+            <label className="block font-semibold mb-2 text-base-content/80">
+              Description <span className="text-red-500">*</span>
             </label>
             <textarea
-              className="textarea textarea-bordered w-full resize-none h-24"
-              defaultValue={data.description}
               name="description"
+              defaultValue={data.description}
+              rows="4"
               placeholder="Write short description"
+              className="textarea textarea-bordered resize-none w-full bg-base-100"
+              required
             ></textarea>
           </div>
-
-          <div className="form-control">
-            <label className="label">
-              <span className="label-text font-semibold">Date</span>
+          <div>
+            <label className="block font-semibold mb-2 text-base-content/80">
+              Date <span className="text-red-500">*</span>
             </label>
             <input
               type="date"
               name="date"
-              className="input input-bordered w-full"
               defaultValue={defaultDate}
+              className="input input-bordered w-full bg-base-100"
+              required
             />
           </div>
-
-          <div className="form-control mt-6">
-            <button className="btn btn-primary w-full">
-              Update Transaction
+          <div className="pt-4">
+            <button
+              type="submit"
+              className="btn btn-primary w-full text-lg font-semibold shadow-lg hover:shadow-primary/30 transition-all duration-300"
+            >
+              Save Changes
             </button>
           </div>
         </form>

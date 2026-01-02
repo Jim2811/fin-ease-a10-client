@@ -31,7 +31,7 @@ const DeleteBtn = ({ myTransaction, handleDltSuccess }) => {
   return (
     <>
       <button
-        className="btn btn-primary bg-red-600 hover:bg-red-700"
+        className="btn btn-sm btn-primary hover:bg-red-700"
         onClick={handleDlt}
       >
         Delete
