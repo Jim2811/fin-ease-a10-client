@@ -3,8 +3,9 @@ import Logo from "../assets/Logo.png";
 import { Link, NavLink } from "react-router";
 import useAuth from "../Hooks/useAuth";
 import LogoutAndProfile from "../Components/LogoutAndProfile";
+import ThemeToggle from "../Components/Button/ThemeToggle";
 const Navbar = () => {
-  const {user} = useAuth()
+  const { user } = useAuth();
   return (
     <>
       <nav className="shadow-lg sticky top-0 z-50">
@@ -17,7 +18,6 @@ const Navbar = () => {
                   role="button"
                   className="btn btn-ghost lg:hidden"
                 >
-
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     className="h-5 w-5"
@@ -73,11 +73,23 @@ const Navbar = () => {
               </ul>
             </div>
             <div className="navbar-end">
-              {
-                !user ? <Link to={'/login'} className="btn btn-accent text-white font-bold">Login/Register</Link>:
-                <LogoutAndProfile/> 
-                
-              }
+              <div className="flex justify-center items-center gap-1">
+                <div>
+                  <ThemeToggle></ThemeToggle>
+                </div>
+                <div>
+                  {!user ? (
+                    <Link
+                      to={"/login"}
+                      className="btn btn-accent text-white font-bold"
+                    >
+                      Login/Register
+                    </Link>
+                  ) : (
+                    <LogoutAndProfile />
+                  )}
+                </div>
+              </div>
             </div>
           </div>
         </div>

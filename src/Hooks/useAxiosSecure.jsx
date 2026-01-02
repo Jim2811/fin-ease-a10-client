@@ -8,9 +8,10 @@ const instance = axios.create({
 const useAxiosSecure = () => {
   const { user } = useAuth();
   useEffect(() => {
-    const interceptor = instance.interceptors.request.use(async (config) => {
+    const interceptor = instance.interceptors.request.use((config) => {
       if (user) {
-        const token = await user?.getIdToken()
+        const token = user?.accessToken
+        console.log(token)
         config.headers.authorization = `Bearer ${token}`;
       }
       return config;
