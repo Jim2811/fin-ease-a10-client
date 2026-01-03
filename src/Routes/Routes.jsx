@@ -14,9 +14,10 @@ import UpdateTransaction from "../Pages/UpdateTransaction";
 import MyProfile from "../Pages/MyProfile";
 import UpdateProfile from "../Pages/UpdateProfile";
 import ErrorPage from "../Pages/ErrorPage";
-import Contact from "../Pages/Contact"
-import Review from "../Pages/Review"
+import Contact from "../Pages/Contact";
+import Review from "../Pages/Review";
 import About from "../Pages/About";
+import DashboardLayout from "../Layout/DashboardLayout";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -36,17 +37,20 @@ const router = createBrowserRouter([
       },
       {
         path: "contact",
-        Component: Contact
+        Component: Contact,
       },
       {
         path: "about",
-        Component: About
+        Component: About,
       },
       {
         Component: PrivateRoute,
         children: [
-          { path: "add-transaction", 
-            Component: AddTransaction },
+          {
+            path: "dashboard",
+            Component: DashboardLayout
+          },
+          { path: "add-transaction", Component: AddTransaction },
           {
             path: "my-transactions",
             Component: MyTransactions,
@@ -57,31 +61,29 @@ const router = createBrowserRouter([
           },
           {
             path: "/update-transaction/:id",
-            loader: ({params}) => fetch(`http://localhost:3000/transactions/${params.id}`),
-            Component: UpdateTransaction
+            loader: ({ params }) =>
+              fetch(`http://localhost:3000/transactions/${params.id}`),
+            Component: UpdateTransaction,
           },
           {
-            path: 'my-profile',
-            Component: MyProfile
+            path: "my-profile",
+            Component: MyProfile,
           },
           {
-            path: 'update-profile',
-            Component: UpdateProfile
-          },
-          { path: "reports", 
-            Component: Reports 
+            path: "update-profile",
+            Component: UpdateProfile,
           },
           {
             path: "review",
-            Component: Review
-          }
+            Component: Review,
+          },
         ],
       },
     ],
   },
   {
     path: "*",
-    Component: ErrorPage
-  }
+    Component: ErrorPage,
+  },
 ]);
 export default router;

@@ -22,11 +22,11 @@ const MonthlyReport = () => {
     );
   }
   return (
-    <div>
-      <div className="custom-gradient rounded-2xl shadow-2xl py-8 px-2">
-        <h2 className="text-2xl font-bold text-primary text-center mb-6">
+    <div className="mt-7 mb-10">
+      <div className="custom-gradient rounded-2xl shadow-xl py-8 px-2">
+        <h3 className="text-3xl font-bold text-base-10 text-center mb-6">
           Monthly Overview
-        </h2>
+        </h3>
         <div className="flex justify-center">
           <div className="w-full">
             {monthlyReport.length === 0 ? (
@@ -66,8 +66,8 @@ const MonthlyReport = () => {
                     }}
                   ></Tooltip>
                   <Legend></Legend>
-                  <Bar dataKey="income" fill="#10b981" name="Income"></Bar>
-                  <Bar dataKey="expense" fill="#ef4444" name="Expense"></Bar>
+                  <Bar barSize={20} dataKey="income" fill="#10b981" name="Income"></Bar>
+                  <Bar barSize={20} dataKey="expense" fill="#ef4444" name="Expense"></Bar>
                 </BarChart>
               </ResponsiveContainer>
             )}

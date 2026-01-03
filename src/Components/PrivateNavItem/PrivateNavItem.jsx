@@ -11,7 +11,7 @@ const PrivateNavItem = () => {
         <NavLink to="/my-transactions">My Transactions</NavLink>
       </li>
       <li>
-        <NavLink to="/reports">Reports</NavLink>
+        <NavLink to="/dashboard">Dashboard</NavLink>
       </li>
     </>
   );

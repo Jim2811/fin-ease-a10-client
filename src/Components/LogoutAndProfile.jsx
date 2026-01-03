@@ -35,11 +35,11 @@ const LogoutAndProfile = () => {
             <div className="pl-2">
               <p>
                 <span className="font-bold">Name: </span>
-                <span>{user.displayName}</span>
+                <span>{user?.displayName}</span>
               </p>
               <p>
                 <span className="font-bold">Email: </span>{" "}
-                <span>{user.email}</span>
+                <span>{user?.email}</span>
               </p>
             </div>
             <Link

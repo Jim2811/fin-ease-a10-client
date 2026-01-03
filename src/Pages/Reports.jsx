@@ -55,11 +55,9 @@ const Reports = () => {
           <Spinner></Spinner>
         </div>
       ) : (
-        <div className="min-h-screen py-11 px-4">
+        <div className="min-h-screen pt-7 pb-7 ">
           <div className="text-center mb-10">
-            <h1 className="text-3xl md:text-5xl font-bold text-primary">
-              Financial Reports
-            </h1>
+            <h1 className="font-bold text-3xl md:text-5xl">Dashboard</h1>
             <p className="text-base-content/70 mt-3 text-lg">
               Visualize your income, expenses, and savings
             </p>
@@ -70,8 +68,6 @@ const Reports = () => {
               income={incomeData}
               expense={expenseData}
             ></CategoryReport>
-
-            <MonthlyReport></MonthlyReport>
           </div>
         </div>
       )}
