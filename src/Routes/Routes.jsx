@@ -15,6 +15,7 @@ import MyProfile from "../Pages/MyProfile";
 import UpdateProfile from "../Pages/UpdateProfile";
 import ErrorPage from "../Pages/ErrorPage";
 import Contact from "../Pages/Contact"
+import Review from "../Pages/Review"
 const router = createBrowserRouter([
   {
     path: "/",
@@ -51,7 +52,7 @@ const router = createBrowserRouter([
           },
           {
             path: "/update-transaction/:id",
-            loader: ({params}) => fetch(`https://fin-ease-server-iota.vercel.app/transactions/${params.id}`),
+            loader: ({params}) => fetch(`http://localhost:3000/transactions/${params.id}`),
             Component: UpdateTransaction
           },
           {
@@ -63,7 +64,12 @@ const router = createBrowserRouter([
             Component: UpdateProfile
           },
           { path: "reports", 
-            Component: Reports },
+            Component: Reports 
+          },
+          {
+            path: "review",
+            Component: Review
+          }
         ],
       },
     ],

@@ -2,6 +2,11 @@ import { motion } from "framer-motion";
 import Balance from "../Report/Balance";
 import TipsWhySection from "../TipsWhySection";
 import NewsLetter from "./NewsLetter";
+import CTASection from "./CTASection";
+import FeaturesSection from "./FeaturesSection";
+import ServicesSection from "./ServicesSection";
+import PartnersSection from "./PartnersSection";
+import ReviewSection from "./ReviewSection";
 
 const sectionVariants = {
   hidden: { opacity: 0, y: 40 },
@@ -39,6 +44,16 @@ const AllSection = () => {
       >
         <TipsWhySection />
       </motion.section>
+      {/* services */}
+      <ServicesSection></ServicesSection>
+      {/* features */}
+      <FeaturesSection></FeaturesSection>
+      {/* Review */}
+      <ReviewSection></ReviewSection>
+      {/* Partners */}
+      <PartnersSection></PartnersSection>
+      {/* CTA */}
+      <CTASection></CTASection>
       {/* newsletter */}
       <NewsLetter></NewsLetter>
     </>
