@@ -1,63 +1,72 @@
-
-import { Link, NavLink, useNavigate } from "react-router";
+import { Link, useNavigate } from "react-router-dom";
 import useAuth from "../Hooks/useAuth";
 import ProfilePic from "../assets/default-profile.png";
 import { toast } from "react-toastify";
+
 const LogoutAndProfile = () => {
   const { user, logout } = useAuth();
-
   const navigate = useNavigate();
-  
-
 
   const handleLogout = () => {
     logout()
       .then(() => {
         navigate("/");
-        toast.success("Logged Out Successfully!");
+        toast.success("Logged out successfully!");
       })
       .catch((err) => toast.error(err.message));
   };
+
   return (
-    <>
-      <div className="flex items-center gap-2">
-        <div className="dropdown">
-          <div tabIndex={0} role="button">
-            <img
-              src={user?.photoURL || ProfilePic}
-              className="w-9 h-9 cursor-pointer rounded-full border-2 border-[#ff6f00]"
-            />
-          </div>
-          <ul
-            tabIndex="-1"
-            className="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-56 p-2 shadow -left-48"
-          >
-            <div className="pl-2">
-              <p>
-                <span className="font-bold">Name: </span>
-                <span>{user?.displayName}</span>
-              </p>
-              <p>
-                <span className="font-bold">Email: </span>{" "}
-                <span>{user?.email}</span>
-              </p>
+    <div className="relative flex items-center">
+      <div className="dropdown dropdown-end">
+        <div
+          tabIndex={0}
+          role="button"
+          className="flex items-center justify-center"
+        >
+          <div className="avatar ring-primary ring-offset-base-100 ring-offset-2 cursor-pointer transition-transform hover:scale-105">
+            <div className="w-10 rounded-full ring ring-primary/60">
+              <img
+                src={user?.photoURL || ProfilePic}
+                alt="Profile Avatar"
+                referrerPolicy="no-referrer"
+              />
             </div>
+          </div>
+        </div>
+        <ul
+          tabIndex={0}
+          className="menu menu-sm dropdown-content mt-3 z-[5] p-4 shadow-lg bg-base-100 border border-base-300 rounded-xl w-64"
+        >
+
+          <div className="pb-2 border-b border-base-300 mb-2">
+            <p className="text-sm font-semibold text-base-content">
+              {user?.displayName || "User"}
+            </p>
+            <p className="text-xs text-base-content/70 break-all">
+              {user?.email || "No email found"}
+            </p>
+          </div>
+
+          <li>
             <Link
-              className="btn btn-primary mt-3 w-full hover:bg-white hover:border-red-600 hover:text-black"
-              to={"/my-profile"}
+              to="/my-profile"
+              className="btn btn-sm btn-primary w-full text-white font-semibold hover:btn-accent transition-colors"
             >
               My Profile
             </Link>
+          </li>
+          <li>
             <button
-              className="btn btn-primary mt-3 bg-red-600 w-full hover:bg-white hover:border-red-600 hover:text-black"
               onClick={handleLogout}
+              className="btn btn-sm bg-red-600 border-none hover:bg-red-700 text-white font-semibold w-full mt-1 transition-colors"
             >
               Logout
             </button>
-          </ul>
-        </div>
+          </li>
+        </ul>
       </div>
-    </>
+    </div>
   );
 };
 

@@ -6,35 +6,44 @@ import {
   signInWithEmailAndPassword,
   signInWithPopup,
   signOut,
+  sendPasswordResetEmail,
 } from "firebase/auth";
 import auth from "../firebase.config";
 import AuthContext from "../Context/AuthContext";
+
 const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
-  const [loading, setLoading] = useState(true)
+  const [loading, setLoading] = useState(true);
+
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       setUser(currentUser);
-      setLoading(false)
+      setLoading(false);
     });
     return () => unsubscribe();
   }, []);
+
   const createUser = (email, password) => {
+    setLoading(true);
     return createUserWithEmailAndPassword(auth, email, password);
   };
 
   const signInUser = (email, password) => {
+    setLoading(true);
     return signInWithEmailAndPassword(auth, email, password);
   };
-
   const logout = () => {
+    setLoading(true);
     return signOut(auth);
   };
-
   const googleProvider = new GoogleAuthProvider();
-
   const googleSignIn = () => {
-    return signInWithPopup(auth , googleProvider);
+    setLoading(true);
+    return signInWithPopup(auth, googleProvider);
+  };
+  const resetPassword = (email) => {
+    setLoading(true);
+    return sendPasswordResetEmail(auth, email);
   };
 
   const authData = {
@@ -44,9 +53,11 @@ const AuthProvider = ({ children }) => {
     signInUser,
     logout,
     googleSignIn,
+    resetPassword,
     loading,
-    setLoading
+    setLoading,
   };
+
   return (
     <AuthContext.Provider value={authData}>{children}</AuthContext.Provider>
   );

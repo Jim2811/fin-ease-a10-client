@@ -1,104 +1,125 @@
 import React from "react";
-import { Link, useNavigate } from "react-router";
+import { Link, useNavigate } from "react-router-dom";
 import useAuth from "../Hooks/useAuth";
 import { updateProfile } from "firebase/auth";
 import GoogleSignIn from "../Components/Button/GoogleSignIn";
 import { toast } from "react-toastify";
+
 const Register = () => {
   const { createUser } = useAuth();
   const navigate = useNavigate();
-  const handleSubmit = (e) => {
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const form = e.target;
-    const name = form.name.value;
-    const mail = form.email.value;
-    const photo = form.photoURL.value;
-    const pass = form.pass.value;
+    const name = form.name.value.trim();
+    const email = form.email.value.trim();
+    const photo = form.photoURL.value.trim();
+    const pass = form.pass.value.trim();
+
     const upperCasePattern = /(?=.*[A-Z])/;
     const lowerCasePattern = /(?=.*[a-z])/;
     const lengthPattern = /.{6,}/;
-    if (!lengthPattern.test(pass)) {
-      toast.error("Password Should be longer than 6 Characters");
-      return;
-    } else if (!upperCasePattern.test(pass)) {
-      toast.error(
-        "Password Should contain minimum 1 UpperCase Character. eg. A B C D"
-      );
-      return;
-    } else if (!lowerCasePattern.test(pass)) {
-      toast.error(
-        "Password Should contain minimum 1 LowerCase Character. eg. a b c"
-      );
-      return;
-    }
-    createUser(mail, pass)
-      .then((r) => {
-        return updateProfile(r.user, {
-          displayName: name,
-          photoURL: photo,
-        }).then(() => {
-          form.reset();
-            toast.success("Registration successful! Welcome to FinEase.");
-            navigate("/");
-          return r.user;
-        });
-      })
-      .catch((err) => {
-        toast.error(err.message);
+
+    if (!lengthPattern.test(pass))
+      return toast.error("Password must be at least 6 characters long.");
+    if (!upperCasePattern.test(pass))
+      return toast.error("Password must contain at least one uppercase letter.");
+    if (!lowerCasePattern.test(pass))
+      return toast.error("Password must contain at least one lowercase letter.");
+
+    try {
+      const result = await createUser(email, pass);
+      await updateProfile(result.user, {
+        displayName: name,
+        photoURL: photo,
       });
+      toast.success("Registration successful! Welcome to FinEase.");
+      form.reset();
+      navigate("/");
+    } catch (err) {
+      toast.error(err.message || "Failed to register user.");
+    }
   };
+
   return (
     <>
       <title>Register - FinEase</title>
-      <div className="h-full w-11/12 mx-auto flex justify-center py-20 flex-col items-center">
-        <form onSubmit={handleSubmit}>
-          <fieldset className="fieldset bg-base-100 border-base-300 rounded-box w-xs border p-4">
-            <legend className="fieldset-legend">Register</legend>
+      <section className="min-h-screen flex flex-col items-center justify-center bg-base-100 px-4 py-10 sm:py-20 transition-colors duration-300">
+        <div className="w-full max-w-md bg-base-200/60 backdrop-blur-md border border-base-300/40 rounded-2xl shadow-xl p-6 sm:p-8">
+          <h2 className="text-3xl font-bold text-primary text-center mb-6">
+            Create Account
+          </h2>
 
-            <label className="label">Name</label>
-            <input
-              type="text"
-              className="input"
-              placeholder="Name"
-              name="name"
-              required
-            />
-            <label className="label">Email</label>
-            <input
-              type="email"
-              className="input"
-              placeholder="Email"
-              name="email"
-              required
-            />
-            <label className="label">Photo URL</label>
-            <input
-              type="url"
-              className="input"
-              placeholder="Photo URL"
-              name="photoURL"
-            />
+          <form onSubmit={handleSubmit} className="space-y-4">
+            <div>
+              <label className="label text-sm font-semibold text-base-content">
+                Name
+              </label>
+              <input
+                type="text"
+                name="name"
+                className="input input-bordered w-full border-base-300 focus:border-primary focus:outline-none"
+                placeholder="Your full name"
+                required
+              />
+            </div>
+            <div>
+              <label className="label text-sm font-semibold text-base-content">
+                Email
+              </label>
+              <input
+                type="email"
+                name="email"
+                className="input input-bordered w-full border-base-300 focus:border-primary focus:outline-none"
+                placeholder="Email address"
+                required
+              />
+            </div>
 
-            <label className="label">Password</label>
-            <input
-              type="password"
-              className="input"
-              placeholder="Password"
-              name="pass"
-              required
-            />
-            <button className="btn btn-accent mt-4" type="submit">
+            <div>
+              <label className="label text-sm font-semibold text-base-content">
+                Photo URL (optional)
+              </label>
+              <input
+                type="url"
+                name="photoURL"
+                className="input input-bordered w-full border-base-300 focus:border-primary focus:outline-none"
+                placeholder="https://example.com/profile.jpg"
+              />
+            </div>
+            <div>
+              <label className="label text-sm font-semibold text-base-content">
+                Password
+              </label>
+              <input
+                type="password"
+                name="pass"
+                className="input input-bordered w-full border-base-300 focus:border-primary focus:outline-none"
+                placeholder="Choose a strong password"
+                required
+              />
+              <p className="text-xs text-base-content/60 mt-1">
+                Must be at least 6 characters, include upper & lower case.
+              </p>
+            </div>
+            <button
+              type="submit"
+              className="btn btn-accent w-full mt-2 text-white font-semibold hover:shadow-lg transition-transform duration-200 hover:scale-[1.02]"
+            >
               Register
             </button>
-            <Link to={"/login"} className="py-2">
-              Already have an Account?{" "}
-              <span className="font-bold text-primary">Login</span>
-            </Link>
-          </fieldset>
-        </form>
-        <h2 className="text-center font-bold text-xl py-2">Or</h2>
-        <GoogleSignIn></GoogleSignIn>
-      </div>
+            <p className="text-center text-sm mt-3">
+              Already have an account?{" "}
+              <Link to="/login" className="font-bold text-primary">
+                Login
+              </Link>
+            </p>
+          </form>
+          <div className="divider my-6">OR</div>
+          <GoogleSignIn />
+        </div>
+      </section>
     </>
   );
 };

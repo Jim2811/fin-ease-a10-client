@@ -5,9 +5,10 @@ import GoogleSignIn from "../Components/Button/GoogleSignIn";
 import { toast } from "react-toastify";
 
 const Login = () => {
-  const { signInUser } = useAuth();
+  const { signInUser, resetPassword } = useAuth();
   const navigate = useNavigate();
   const [inputs, setInputs] = useState({ email: "", password: "" });
+  const [sending, setSending] = useState(false);
 
   const handleLogin = (e) => {
     e.preventDefault();
@@ -16,7 +17,7 @@ const Login = () => {
 
     signInUser(email, password)
       .then(() => {
-        toast.success("Login Successful");
+        toast.success("Login successful");
         navigate("/");
       })
       .catch((err) => toast.error(err.message));
@@ -27,13 +28,28 @@ const Login = () => {
     const demoPass = "DemoUser@";
 
     setInputs({ email: demoEmail, password: demoPass });
-      signInUser(demoEmail, demoPass)
-        .then(() => {
-          toast.success("Demo Login Successful");
-          navigate("/");
-        })
-        .catch((err) => toast.error(err.message));
+    signInUser(demoEmail, demoPass)
+      .then(() => {
+        toast.success("Demo Login successful");
+        navigate("/");
+      })
+      .catch((err) => toast.error(err.message));
   };
+  const handleForgotPassword = async () => {
+    if (!inputs.email) {
+      return toast.warn("Please enter your email address first.");
+    }
+    try {
+      setSending(true);
+      await resetPassword(inputs.email);
+      toast.success("Password reset link sent to your email.");
+    } catch (err) {
+      toast.error(err.message || "Failed to send reset link.");
+    } finally {
+      setSending(false);
+    }
+  };
+
   return (
     <>
       <title>Login - FinEase</title>
@@ -53,10 +69,9 @@ const Login = () => {
               name="email"
               required
               value={inputs.email}
-              onChange={(e) =>
-                setInputs({ ...inputs, email: e.target.value })
-              }
+              onChange={(e) => setInputs({ ...inputs, email: e.target.value })}
             />
+
             <label className="label font-semibold">Password</label>
             <input
               type="password"
@@ -69,25 +84,30 @@ const Login = () => {
                 setInputs({ ...inputs, password: e.target.value })
               }
             />
-            <Link
-              to="/reset-password"
+            <button
+              type="button"
               className="text-primary font-semibold py-1 inline-block"
+              onClick={handleForgotPassword}
+              disabled={sending}
             >
-              Forgot Password?
-            </Link>
+              {sending ? "Sending Reset Link..." : "Forgot Password?"}
+            </button>
+
             <button
               className="btn btn-accent mt-3 w-full text-white font-semibold"
               type="submit"
             >
               Login
             </button>
+
             <button
               type="button"
               onClick={handleDemoLogin}
-              className="btn btn-primary hover:btn-accent mt-2"
+              className="btn btn-primary hover:btn-accent mt-2 w-full text-white"
             >
               Demo Login
             </button>
+
             <p className="text-center mt-4 text-sm">
               Don't have an account?{" "}
               <Link to="/register" className="font-bold text-primary">
@@ -96,6 +116,7 @@ const Login = () => {
             </p>
           </fieldset>
         </form>
+
         <h2 className="text-center font-bold text-xl py-4">Or</h2>
         <GoogleSignIn />
       </div>
