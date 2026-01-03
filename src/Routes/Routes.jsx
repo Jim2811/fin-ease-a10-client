@@ -18,6 +18,7 @@ import Contact from "../Pages/Contact";
 import Review from "../Pages/Review";
 import About from "../Pages/About";
 import DashboardLayout from "../Layout/DashboardLayout";
+import TranSactionTable from "../Components/TranSactionTable";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -48,7 +49,17 @@ const router = createBrowserRouter([
         children: [
           {
             path: "dashboard",
-            Component: DashboardLayout
+            Component: DashboardLayout,
+            children: [
+              {
+                index: true,
+                Component: Reports
+              },
+              {
+                path: "transactions-table",
+                Component: TranSactionTable,
+              },
+            ],
           },
           { path: "add-transaction", Component: AddTransaction },
           {

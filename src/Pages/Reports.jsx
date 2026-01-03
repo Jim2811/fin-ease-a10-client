@@ -5,6 +5,7 @@ import useAuth from "../Hooks/useAuth";
 import { toast } from "react-toastify";
 import MonthlyReport from "../Components/Report/MonthlyReport";
 import Spinner from "../Components/Spinner";
+import Balance from "../Components/Report/Balance";
 const Reports = () => {
   const { user } = useAuth();
   const axiosSecure = useAxiosSecure();
@@ -68,6 +69,13 @@ const Reports = () => {
               income={incomeData}
               expense={expenseData}
             ></CategoryReport>
+          </div>
+          <MonthlyReport></MonthlyReport>
+          <div className="bg-base-200 p-6 rounded-2xl">
+            <h3 className="text-3xl font-bold text-base-10 text-center mb-6">
+              Overall Overview
+            </h3>
+            <Balance></Balance>
           </div>
         </div>
       )}

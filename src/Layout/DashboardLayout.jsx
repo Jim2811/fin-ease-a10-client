@@ -1,19 +1,17 @@
 import { useState } from "react";
 import { FaBars, FaChartPie, FaUsers } from "react-icons/fa";
 import { CiHome } from "react-icons/ci";
-import { NavLink } from "react-router";
+import { NavLink, Outlet } from "react-router";
 import { MdOutlineAddchart } from "react-icons/md";
 import { HiOutlineDocumentReport } from "react-icons/hi";
 import ThemeToggle from "../Components/Button/ThemeToggle";
-import MonthlyReport from "../Components/Report/MonthlyReport";
-import Reports from "../Pages/Reports";
-import Balance from "../Components/Report/Balance";
 import LogoutAndProfile from "../Components/LogoutAndProfile";
+import { CiViewTable } from "react-icons/ci";
 
 const DashboardLayout = () => {
   const [drawerOpen, setDrawerOpen] = useState(false);
   return (
-    <div className="relative flex min-h-screen bg-base-100 overflow-hidden">
+    <div className="relative flex min-h-screen bg-base-100 max-w-[1200px] mx-auto">
       <aside
         className={`fixed top-0 left-0 h-full w-64 z-50 bg-base-200 border-r border-base-300 
         transform transition-transform duration-300
@@ -88,6 +86,16 @@ const DashboardLayout = () => {
               <span>My Transactions</span>
             </NavLink>
           </li>
+          <li>
+            <NavLink
+              to="/dashboard/transactions-table"
+              className="hover:bg-base-300 hover:text-primary transition-colors"
+              onClick={() => setDrawerOpen(false)}
+            >
+              <CiViewTable />
+              <span>Transaction History</span>
+            </NavLink>
+          </li>
 
           <li className="pt-3 border-t border-base-300 mt-2">
             <ThemeToggle />
@@ -120,14 +128,7 @@ const DashboardLayout = () => {
         </div>
 
         <main className="flex-1 p-4 sm:p-6">
-          <Reports></Reports>
-          <MonthlyReport></MonthlyReport>
-          <div className="mb-10 bg-base-200 p-6 rounded-2xl">
-            <h3 className="text-3xl font-bold text-base-10 text-center mb-6">
-              Overall Overview
-            </h3>
-            <Balance></Balance>
-          </div>
+            <Outlet></Outlet>
         </main>
       </div>
     </div>
