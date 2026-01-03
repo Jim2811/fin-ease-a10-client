@@ -29,6 +29,8 @@ const AddTransaction = () => {
 
   const categories = type === "Income" ? incomeCategories : expenseCategories;
 
+  const today = new Date().toISOString().split("T")[0];
+
   const handleAddTransaction = async (e) => {
     e.preventDefault();
     const form = e.target;
@@ -40,11 +42,16 @@ const AddTransaction = () => {
       toast.warning("Please select a category");
       return;
     }
+
     if (!amount || amount <= 0) {
       toast.error("Please enter a valid amount");
       return;
     }
 
+    if (new Date(date) > new Date(today)) {
+      toast.warning("You cannot select a future date.");
+      return;
+    }
     const newTransaction = {
       type,
       category,
@@ -149,10 +156,13 @@ const AddTransaction = () => {
             type="date"
             name="date"
             className="input input-bordered w-full bg-base-100"
+            max={today}
             required
           />
+          <p className="text-xs text-base-content/60 mt-1">
+            You cannot select a future date.
+          </p>
         </div>
-
         <div className="grid md:grid-cols-2 gap-4 mb-8">
           <div>
             <label className="block font-semibold mb-1 text-base-content/80">
