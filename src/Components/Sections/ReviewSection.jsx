@@ -14,7 +14,7 @@ const ReviewSection = () => {
   }, [axiosSecure]);
 
   return (
-    <section className="py-20 px-6 bg-gradient-to-br from-primary/10 via-base-100 to-secondary/10">
+    <section className="py-20 px-6 custom-gradient">
       <div className="max-w-5xl mx-auto text-center mb-14">
         <h2 className="text-2xl md:text-4xl font-extrabold text-base-content mb-2">
           What Our <span className="text-primary">Users Say</span>
@@ -31,29 +31,39 @@ const ReviewSection = () => {
       ) : (
         <div className="max-w-6xl mx-auto">
           <Swiper
-            spaceBetween={30}
+            spaceBetween={20}
             slidesPerView={1}
             breakpoints={{
-              640: { slidesPerView: 1 },
-              768: { slidesPerView: 2 },
-              1024: { slidesPerView: 3 },
+              640: { slidesPerView: 1, spaceBetween: 20 },
+              768: { slidesPerView: 2, spaceBetween: 20 },
+              1024: { slidesPerView: 3, spaceBetween: 25 },
             }}
             loop={true}
+            centeredSlides={false}
             autoplay={{
               delay: 5000,
               disableOnInteraction: false,
             }}
+            style={{
+              paddingLeft: "0.5rem",
+              paddingRight: "0.5rem",
+            }}
             className="pb-8"
           >
             {reviews.map((r) => (
-              <SwiperSlide key={r._id}>
-                <ReviewCard
-                  photo={r.photo}
-                  name={r.name}
-                  feedback={r.feedback}
-                  rating={r.rating}
-                  date={r.date}
-                />
+              <SwiperSlide
+                key={r._id}
+                className="flex justify-center items-center !h-auto"
+              >
+                <div className="w-full h-full flex justify-center items-center">
+                  <ReviewCard
+                    photo={r.photo}
+                    name={r.name}
+                    feedback={r.feedback}
+                    rating={r.rating}
+                    date={r.date}
+                  />
+                </div>
               </SwiperSlide>
             ))}
           </Swiper>

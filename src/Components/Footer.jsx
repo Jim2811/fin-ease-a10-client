@@ -5,7 +5,7 @@ import {
   FaLinkedinIn,
 } from "react-icons/fa";
 import Logo from "../assets/Logo.png";
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 
 const Footer = () => {
   return (
@@ -54,10 +54,10 @@ const Footer = () => {
               <li>Rangpur, Bangladesh</li>
               <li className="pt-2 flex flex-col space-y-1">
                 <Link
-                  to="/"
+                  to="/review"
                   className="hover:text-primary transition-colors"
                 >
-                  Terms & Conditions
+                  Add Review
                 </Link>
                 <Link
                   to="/"

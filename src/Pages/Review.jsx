@@ -46,7 +46,7 @@ const Review = () => {
   };
 
   return (
-    <section className="min-h-screen flex items-center justify-center px-6 py-16 bg-gradient-to-br from-primary/10 via-base-100 to-secondary/10">
+    <section className="min-h-screen flex items-center justify-center px-6 py-16 custom-gradient">
       <div className="w-full max-w-2xl bg-base-200/60 border border-base-300 backdrop-blur-md rounded-3xl shadow-xl p-10">
         <h2 className="text-3xl md:text-4xl font-extrabold text-center text-primary mb-10">
           Share Your <span className="text-base-content">Experience</span>
