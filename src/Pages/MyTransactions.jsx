@@ -43,7 +43,7 @@ const MyTransactions = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-primary/10 via-base-100 to-secondary/10 pb-16 px-4">
+    <div className="min-h-screen custom-gradient pb-16 px-4">
       <div className="text-center py-10">
         <h1 className="text-4xl md:text-5xl font-extrabold text-primary">
           My Transactions

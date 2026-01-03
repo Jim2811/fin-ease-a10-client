@@ -82,7 +82,7 @@ const UpdateTransaction = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center px-6 py-12 bg-gradient-to-br from-primary/10 via-base-100 to-secondary/10">
+    <div className="min-h-screen flex items-center justify-center px-6 py-12 custom-gradient">
       <div className="w-full max-w-2xl bg-base-200/60 backdrop-blur-md border border-base-300 rounded-2xl shadow-xl p-8">
         <h2 className="text-3xl md:text-4xl font-extrabold text-primary text-center mb-10">
           Update Transaction

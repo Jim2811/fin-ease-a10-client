@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import Balance from "../Report/Balance";
 import TipsWhySection from "../TipsWhySection";
+import NewsLetter from "./NewsLetter";
 
 const sectionVariants = {
   hidden: { opacity: 0, y: 40 },
@@ -38,6 +39,8 @@ const AllSection = () => {
       >
         <TipsWhySection />
       </motion.section>
+      {/* newsletter */}
+      <NewsLetter></NewsLetter>
     </>
   );
 };

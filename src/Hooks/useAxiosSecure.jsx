@@ -11,7 +11,6 @@ const useAxiosSecure = () => {
     const interceptor = instance.interceptors.request.use((config) => {
       if (user) {
         const token = user?.accessToken
-        console.log(token)
         config.headers.authorization = `Bearer ${token}`;
       }
       return config;

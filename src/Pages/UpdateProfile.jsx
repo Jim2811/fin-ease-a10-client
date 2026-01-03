@@ -29,7 +29,7 @@ const UpdateProfile = () => {
       <div className="flex flex-col justify-center items-center py-12 min-h-screen">
         <div className="py-5 custom-gradient shadow-2xl rounded-2xl hover:shadow-primary/30 transition duration-300 flex flex-col justify-center">
           <form className="" onSubmit={handleSubmit}>
-            <h1 className="font-bold text-center font-bold text-4xl text-primary py-4">
+            <h1 className="text-center font-bold text-4xl text-primary py-4">
               Update Profile
             </h1>
             <fieldset className="fieldset border-none rounded-box w-xs border p-4">
